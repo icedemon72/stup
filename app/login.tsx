@@ -2,17 +2,21 @@ import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { ThemedView } from '@/components/themed/ThemedView';
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import Feather from '@expo/vector-icons/Feather';
 import { Colors } from '@/constants/Colors';
+import RelativeLogo from '@/components/ui/RelativeLogo';
 
 const Login: React.FC = () => {
+	const [ email, setEmail ] = useState<string>('');
+	const [ password, setPassword ] = useState<string>('');
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
 
 	return (
 		<View style={ styles.container }>
 			<ThemedView style={ styles.inputContainer }>
+				<RelativeLogo />
 				<ThemedText style={{ textAlign: 'center', marginBottom: 10 }} type='subtitle'>Prijava</ThemedText>
 				
 				{/* E-mail */}
@@ -30,6 +34,7 @@ const Login: React.FC = () => {
 						inputMode='email'
 						autoFocus
 						autoCapitalize='none'
+						onChangeText={setEmail}
 						lightColor={Colors.light.backgroundSecondary} 
 						darkColor={Colors.dark.backgroundSecondary}
 						style={{ flex: 1 }}
@@ -53,6 +58,7 @@ const Login: React.FC = () => {
 						inputMode='text'
 						secureTextEntry={ !passwordShown }
 						autoCapitalize='none'
+						onChangeText={setPassword}
 						lightColor={Colors.light.backgroundSecondary} 
 						darkColor={Colors.dark.backgroundSecondary}
 						style={{ flex: 1 }}

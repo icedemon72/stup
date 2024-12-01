@@ -33,7 +33,7 @@ const RootLayout = () => {
 				headerShown: false
 			}}>
 				<Stack.Screen name='login' />
-				<Stack.Screen name='register' />
+				<Stack.Screen name='(register)' />
 				<Stack.Screen name='home' />
 				<Stack.Screen name='(tabs)' />
 			</Stack>

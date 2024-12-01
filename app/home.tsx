@@ -18,7 +18,7 @@ const Home: React.FC = () => {
 							<Text>Prijavi se</Text>
 						</TouchableOpacity>
 					</Link>
-					<Link href="/register" asChild>
+					<Link href="/(register)/register-step-1" asChild>
 						<TouchableOpacity style={ styles.button }>
 							<Text>Registruj se</Text>
 						</TouchableOpacity>

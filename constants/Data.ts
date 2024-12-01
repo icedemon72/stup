@@ -1,4 +1,9 @@
-export const faculties = [
+export type FacultyType = {
+	name: string;
+	value: number;
+}
+
+export const faculties: FacultyType[]= [
 	'Ekonomski fakultet', 'Medicinski fakultet', 'Poljoprivredni fakultet', 'Pravni fakultet',
 	'Prirodno-matematički fakultet', 'Učiteljski fakultet', 'Fakultet za sport i fizičko vaspitanje',
 	'Fakultet tehničkih nauka', 'Filozofski fakultet'

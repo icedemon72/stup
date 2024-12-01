@@ -1,11 +1,13 @@
+import { ThemedText } from '@/components/themed/ThemedText';
 import { Link, Stack } from 'expo-router';
 import { View, StyleSheet } from 'react-native';
 
 export default function NotFoundScreen() {
   return (
     <View>
-      <Stack.Screen options={{ title: "Oops! This screen doesn't exist." }} />
+      <Stack.Screen options={{ title: "Ne postoji stranica." }} />
       <View style={styles.container}>
+				<ThemedText>Ne postoji stranica :(</ThemedText>
       </View>
     </View>
   );

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { ThemedView } from '@/components/themed/ThemedView';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet,  Text,  TouchableOpacity,  View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { faculties } from '@/constants/Data';
 import { Feather } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
