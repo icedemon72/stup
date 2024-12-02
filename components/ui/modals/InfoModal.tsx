@@ -57,8 +57,8 @@ const InfoModal = ({ title = 'Info', subtitle, text = '', closeFunc }: InfoModal
 const styles = StyleSheet.create({
 	infoIcon: {
 		position: 'absolute',
-		right: 20,
-		top: 20
+		right: 25,
+		top: 25
 	},
 	container: {
 		flex: 1,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 	},
 	card: {
 		position: 'relative',
-		borderRadius: 10,
+		borderRadius: 50,
 		maxHeight: '80%',
 		width: '90%',
 	},

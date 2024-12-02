@@ -1,19 +1,24 @@
+import React, { useEffect, useState } from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedSelectDropdown } from '@/components/themed/ThemedSelectDropdown';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
-import NavigationArrows from '@/components/ui/NavigationArrows';
-import RelativeLogo from '@/components/ui/RelativeLogo';
-import { Colors } from '@/constants/Colors';
 import { faculties } from '@/constants/Data';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { StepFour } from '@/constants/Validators';
+import NavigationArrows from '@/components/ui/NavigationArrows';
+import RelativeLogo from '@/components/ui/RelativeLogo';
+import HelpButton from '@/components/ui/HelpButton';
+import { InfoTexts } from '@/constants/Texts';
 
 const RegisterStepFour = () => {
-	const { gender, step, setStep, faculty, setFaculty } = useRegisterContext();
 	const router = useRouter();
+	const { gender, step, setStep, faculty, setFaculty } = useRegisterContext();
+
+	const [ nextDisabled, setNextDisabled ] = useState<boolean>(true);
+
 
 	const handleNext = () => {
 		setStep(5);
@@ -24,11 +29,22 @@ const RegisterStepFour = () => {
 		router.replace('/(register)/register-step-3' as RelativePathString);
 	}
 
+	const validateForm = () => {
+		const success: boolean = StepFour.safeParse({ faculty }).success;
+		
+		setNextDisabled(!success);
+	}
+
+	useEffect(() => {
+		validateForm();
+	}, [ faculty ]);
+
 	return (
 		<View style={ styles.container }>
 			<ThemedView style={ styles.inputContainer }>
 			<RelativeLogo />
-			
+			<HelpButton title='Pomoć' text={InfoTexts.faculty} />
+
 			<View style={styles.inputContent}>
 				<View>
 
@@ -43,6 +59,7 @@ const RegisterStepFour = () => {
 							onSelect={(selectedItem) => setFaculty(selectedItem)}
 							search={true}
 							searchPlaceHolder='Pretražite fakultete...'
+							defaultValue={faculty}
 							renderButton={(selectedItem, isOpened) => {
 								return (
 									<ThemedView style={styles.dropdownButtonStyle}>
@@ -50,7 +67,9 @@ const RegisterStepFour = () => {
 										<ThemedText style={styles.dropdownButtonTxtStyle}>
 											{(selectedItem && selectedItem.name) || 'Izaberite fakultet...'}
 										</ThemedText>
-										<ThemedText><Feather name="chevron-down" size={24} /></ThemedText>
+										<ThemedText>
+											{ isOpened ? <Feather name="chevron-up" size={24} /> : <Feather name="chevron-down" size={24} /> }
+										</ThemedText>
 										{/* Fix the chevron... */}
 
 									</ThemedView>
@@ -73,7 +92,7 @@ const RegisterStepFour = () => {
 				</View>
 					
 				<View>
-					<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+					<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious} />
 				</View>
 			</View>
 

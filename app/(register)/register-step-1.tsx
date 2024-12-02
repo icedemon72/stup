@@ -2,15 +2,14 @@ import React from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import { Dimensions, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import GenderView from '@/components/ui/GenderView';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import HelpButton from '@/components/ui/HelpButton';
+import { InfoTexts } from '@/constants/Texts';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -27,7 +26,7 @@ const RegisterStepOne = () => {
 		<SafeAreaView style={ styles.container }>
 			<ThemedView style={ styles.inputContainer }>
 				<RelativeLogo />
-				<HelpButton title='Pomoć' text='Pritisnite pol da biste ga izabrali. Ove informacije služe prilikom prikazivanja relevantnih STUPitnika, kao i za (eventualno) prikupljanje podataka od strane STUPitivača.' />
+				<HelpButton title='Pomoć' text={InfoTexts.gender} />
 				<View style={styles.inputContent}>
 					<View>
 						<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Registracija</ThemedText>

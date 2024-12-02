@@ -1,9 +1,16 @@
+import { useSession } from "@/components/contexts/AuthContext";
 import { ThemedText } from "@/components/themed/ThemedText";
-import { Link } from "expo-router";
+import { Link, Redirect } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Home: React.FC = () => {
+	const { session } = useSession();
+	
+	if(session) {
+		return <Redirect href="/(tabs)" />
+	}
+
 	return (
 		<View style={ styles.container }>
 			<View style={ styles.inputContainer }>

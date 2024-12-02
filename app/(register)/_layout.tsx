@@ -1,14 +1,15 @@
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { RegisterProvider, useRegisterContext } from '@/components/contexts/RegisterContext';
-import { useEffect } from 'react';
+import { useSession } from "@/components/contexts/AuthContext";
 
 const RegisterLayout = () => {
 	const { step } = useRegisterContext();
 
-	useEffect(() => {
-		console.log(step);
-	}, [ step ]);
-
+	const { session } = useSession();
+	
+	if(session) {
+		return <Redirect href="/(tabs)" />
+	}
   return (
 		<RegisterProvider>
 			<Stack screenOptions={{ 

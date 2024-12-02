@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
-import { Colors } from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedView } from '@/components/themed/ThemedView';
+import { StepThree } from '@/constants/Validators';
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import HelpButton from '@/components/ui/HelpButton';
+import { InfoTexts } from '@/constants/Texts';
 
 const RegisterStepThree = () => {
 	const router = useRouter();
 	const { gender, step, setStep, dateOfBirth, setDateOfBirth, name, setName } = useRegisterContext();
 
 	const [ showDatePicker, setShowDatePicker ] = useState<boolean>(false);
+	const [ nextDisabled, setNextDisabled ] = useState<boolean>(true);
 
 	const handleNext = () => {
 		setStep(4);
@@ -36,11 +39,22 @@ const RegisterStepThree = () => {
 		setShowDatePicker(false); 
 	};
 
+	const validateForm = () => {
+		const success: boolean = StepThree.safeParse({ name, dateOfBirth }).success;
+
+		setNextDisabled(!success || dateOfBirth === null);
+	}
+
+	useEffect(() => {
+		validateForm();
+	}, [ name, dateOfBirth ])
+
 	return (
 		<View style={ styles.container }>
 				<ThemedView style={ styles.inputContainer }>
 					<RelativeLogo />
-					
+					<HelpButton title='Pomoć' text={InfoTexts.nameAndDate} />
+
 					<View style={styles.inputContent}>
 						<View>
 							<View>
@@ -55,7 +69,11 @@ const RegisterStepThree = () => {
 
 							<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 								<ThemedText>
-									<MaterialCommunityIcons name={gender === 'M' ? 'face-man-outline' : 'face-woman-outline'} size={24} />
+									{ 
+										gender === 'M' 
+										? <MaterialCommunityIcons name='face-man-outline' size={24} />
+										: <MaterialCommunityIcons name='face-woman-outline' size={24} />
+									}
 								</ThemedText>
 								<ThemedTextInput
 									placeholder='Ime i prezime'
@@ -97,7 +115,7 @@ const RegisterStepThree = () => {
 						</View>
 						
 						<View>
-							<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+							<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious} />
 						</View>
 					</View>
 
@@ -110,8 +128,6 @@ const RegisterStepThree = () => {
 							onChange={handleDateChange}
 						/>
 					}
-
-					
 				</ThemedView>
 		</View>
 	);

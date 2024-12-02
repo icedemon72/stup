@@ -4,7 +4,6 @@ import { ThemedText } from '../themed/ThemedText';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';import InfoModal from './modals/InfoModal';
 import { InfoModalProps } from '@/types/componentTypes';
-;
 
 const HelpButton = ({ title, subtitle, text }: InfoModalProps) => {
 	const [ isModalOpened, setIsModalOpened ] = useState<boolean>(false);

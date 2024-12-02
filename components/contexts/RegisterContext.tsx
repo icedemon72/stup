@@ -49,11 +49,11 @@ export const useRegisterContext = () => {
 }
 
 export function RegisterProvider({ children }: RegisterProviderProps) {
-	const [ email, setEmail ] = useState<string>('');
-	const [ name, setName ] = useState<string>('');
+	const [ email, setEmail ] = useState<string>('123@gmail.com');
+	const [ name, setName ] = useState<string>('Milos');
 	const [ gender, setGender ] = useState<string>('M');
 	const [ faculty, setFaculty ] = useState<FacultyType | null>(null); // This should be interface with name and id
-	const [ password, setPassword ] = useState<string>('')
+	const [ password, setPassword ] = useState<string>('123456')
 	const [ dateOfBirth, setDateOfBirth ] = useState<Date | null>(null);
 	const [ step, setStep ] = useState<number>(1);
 

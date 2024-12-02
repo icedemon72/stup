@@ -1,23 +1,42 @@
+import React, { useState } from 'react'
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { ThemedView } from '@/components/themed/ThemedView';
-import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-import Feather from '@expo/vector-icons/Feather';
+import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import { useSession } from '@/components/contexts/AuthContext';
+import { Redirect } from 'expo-router';
+
 import RelativeLogo from '@/components/ui/RelativeLogo';
+import Feather from '@expo/vector-icons/Feather';
 
 const Login: React.FC = () => {
 	const [ email, setEmail ] = useState<string>('');
 	const [ password, setPassword ] = useState<string>('');
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
+	const { signIn, isLoading, session } = useSession();
+
+	if (session) {
+		return <Redirect href="/(tabs)" />;
+	}
+
+	const handleLogin = async () => {
+
+		try {
+			await signIn(email, password);
+		}catch (err: any) {
+			if(Platform.OS === 'ios') {
+				setPassword('');
+			}
+			console.log(err);
+		}
+	};
 
 	return (
 		<View style={ styles.container }>
 			<ThemedView style={ styles.inputContainer }>
 				<RelativeLogo />
-				<ThemedText style={{ textAlign: 'center', marginBottom: 10 }} type='subtitle'>Prijava</ThemedText>
+				<ThemedText style={{ textAlign: 'center', marginBottom: 20 }} type='subtitle'>Prijava</ThemedText>
 				
 				{/* E-mail */}
 				<ThemedView 
@@ -69,7 +88,7 @@ const Login: React.FC = () => {
 					</ThemedText>
 				</ThemedView>
 
-				<TouchableOpacity style={ styles.loginButton }>
+				<TouchableOpacity style={ styles.loginButton } onPress={handleLogin}>
 					<Text style={{ textAlign: 'center' }}>Prijavi se!</Text>
 				</TouchableOpacity>
 

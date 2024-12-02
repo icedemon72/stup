@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
+import { AuthProvider } from "@/components/contexts/AuthContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,20 +26,22 @@ const RootLayout = () => {
   if (!loaded) {
     return null;
   }
-
+	
   return (
 		// Change this...
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack screenOptions={{ 
-				headerShown: false
-			}}>
-				<Stack.Screen name='login' />
-				<Stack.Screen name='(register)' />
-				<Stack.Screen name='home' />
-				<Stack.Screen name='(tabs)' />
-			</Stack>
-			<StatusBar style="auto" />
-		</ThemeProvider>
+		<AuthProvider>
+			<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+				<Stack screenOptions={{ 
+					headerShown: false
+				}}>
+					<Stack.Screen name='login' />
+					<Stack.Screen name='(register)' />
+					<Stack.Screen name='home' />
+					<Stack.Screen name='(tabs)' />
+				</Stack>
+				<StatusBar style="auto" />
+			</ThemeProvider>
+		</AuthProvider>
 	);
 }
 

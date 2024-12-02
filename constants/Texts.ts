@@ -1,4 +1,6 @@
 export const InfoTexts = {
 	gender: 'Pritisnite pol da biste ga izabrali. Ove informacije služe prilikom prikazivanja relevantnih STUPitnika, kao i za (eventualno) prikupljanje podataka od strane STUPitivača.',
 	emailPassword: 'Potrebno je uneti validnu e-adresu, koja već nije registrovana na STUP-u. Za lozinku potrebno je najmanje 6 karaktera, ali zbog Vaše bezbednosti i privatnosti preporučuje se da lozinka sadrži što je više moguće karaktera (pogotovo "specijalnih" karaktera, poput ~!"#%&/). STUP nikad neće deliti Vašu e-adresu drugima.',
+	nameAndDate: 'U ovim poljima treba uneti informacije o Vašem imenu i prezimenu (ovo polje nije obavezno, ali je korisno prilikom objavljivanja STUPitnika) i datumu rodjenja. Informacije o datumu rodjenja mogu biti korišćene prilikom prikazivanja relevantnih STUPitnika, pa bi bilo pogodno uneti pravi datum. Osim ove svrhe, neće biti deljen, niti korišćen.',
+	faculty: 'Na kraju, zbog prikazivanja relevantnih STUPitnika, neophodno je izabrati jedan fakultet pritiskom na dugme. Fakultete je moguće pretražiti prilikom odabira istog.',
 }

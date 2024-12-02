@@ -1,11 +1,14 @@
+import { useSession } from "@/components/contexts/AuthContext";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
 import { Redirect, Tabs } from "expo-router";
-import { Text } from "react-native";
+
 
 const TabsLayout = () => {
-	if(true) {
+	const { session } = useSession();
+
+	if(!session) {
 		return <Redirect href="/home" />
 	}
 
@@ -29,6 +32,12 @@ const TabsLayout = () => {
 				title: 'Kreiraj STUPitnik',
 				tabBarIcon: ({ color, focused }) => (
 					<TabBarIcon name={focused ? 'add-circle' : 'add-circle-outline'} color={color} />
+				),
+			}} />
+			<Tabs.Screen name="profile" options={{
+				title: 'Profil',
+				tabBarIcon: ({ color, focused }) => (
+					<TabBarIcon onLongPress={() => console.log('hello')} name={focused ? 'person-circle' : 'person-circle-outline'} color={color} />
 				),
 			}} />
 		</Tabs>

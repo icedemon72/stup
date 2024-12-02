@@ -28,7 +28,7 @@ const NavigationArrows = ({ isFirst = false, isLast = false, handleNext, handleP
 			}
 			{
 				!isLast &&
-				<TouchableOpacity disabled={nextDisabled} style={styles.button} onPress={handleNext}>
+				<TouchableOpacity disabled={nextDisabled} style={[styles.button, nextDisabled && { backgroundColor: 'gray' }]} onPress={handleNext}>
 					<ThemedText style={{ textAlign: 'center' }}>
 						<Feather name="arrow-right" size={24}  />
 					</ThemedText>

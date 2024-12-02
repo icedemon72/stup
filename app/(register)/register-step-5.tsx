@@ -1,28 +1,45 @@
+import React, { useState } from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { ThemedView } from '@/components/themed/ThemedView';
-import NavigationArrows from '@/components/ui/NavigationArrows';
-import RelativeLogo from '@/components/ui/RelativeLogo';
-import { Colors } from '@/constants/Colors';
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import RelativeLogo from '@/components/ui/RelativeLogo';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '@/constants/Firebase';
 
 const RegisterStepFour = () => {
 	const { email, password, setPassword, gender, step, setStep, faculty, setFaculty, dateOfBirth, name } = useRegisterContext();
-	
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
+	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
 	const router = useRouter();
 
-	const handleRegister = () => {
-		setStep(5);
+	const handleRegister = async () => {
+		const data = { email, password, name, gender, dateOfBirth, faculty };
+		
+		try {
+			setIsLoading(true);
+			const creds = await createUserWithEmailAndPassword(auth, email, password);
+			const user = creds.user;
+
+			if(user) {
+				await setDoc(doc(db, 'users', user.uid), data);
+			}
+		} catch(err: any) {
+			
+		} finally {
+			setIsLoading(false);
+		}
+
+
 	}
 
 	const handlePrevious = () => {
-		router.replace('/(register)/register-step-3' as RelativePathString);
+		router.replace('/(register)/register-step-4' as RelativePathString);
 	}
 
 	return (
@@ -121,7 +138,7 @@ const RegisterStepFour = () => {
 					/>
 				</ThemedView>
 			
-				<TouchableOpacity style={ styles.registerButton }>
+				<TouchableOpacity style={ styles.registerButton } onPress={ handleRegister }>
 					<Text style={{ textAlign: 'center' }}>Registruj se!</Text>
 				</TouchableOpacity>
 			</ThemedView>

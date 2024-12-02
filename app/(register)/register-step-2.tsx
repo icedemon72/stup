@@ -1,8 +1,7 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
-import { Colors } from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -11,6 +10,7 @@ import { ThemedView } from '@/components/themed/ThemedView';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import HelpButton from '@/components/ui/HelpButton';
 import { InfoTexts } from '@/constants/Texts';
+import { StepTwo } from '@/constants/Validators';
 
 
 const RegisterStepTwo = () => {
@@ -18,6 +18,7 @@ const RegisterStepTwo = () => {
 	const { gender, step, setStep, email, setEmail, password, setPassword} = useRegisterContext();
 
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
+	const [ nextDisabled, setNextDisabled ] = useState<boolean>(true);
 
 	const handleNext = () => {
 		setStep(3);
@@ -28,9 +29,15 @@ const RegisterStepTwo = () => {
 		router.replace('/(register)/register-step-1' as RelativePathString);
 	}
 
-	const checkEmail = () => {
+	const validateForm = () => {
+		const success: boolean = StepTwo.safeParse({ email, password }).success;
 		
+		setNextDisabled(!success);
 	}
+
+	useEffect(() => {
+		validateForm();
+	}, [ email, password ])
 
 	return (
 		<View style={styles.container}>
@@ -55,7 +62,7 @@ const RegisterStepTwo = () => {
 								autoComplete='email'
 								inputMode='email'
 								autoCapitalize='none'
-								autoFocus
+								autoFocus={!email.length}
 								style={{ flex: 1 }}
 								onChangeText={setEmail}
 								value={email}
@@ -94,7 +101,7 @@ const RegisterStepTwo = () => {
 					</View>
 
 					<View>
-						<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+						<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious}  />
 					</View>
 				</KeyboardAvoidingView>
 			</ThemedView>
