@@ -1,7 +1,7 @@
-import { ThemedView } from '@/app-example/components/ThemedView';
 import { ThemedSelectDropdown } from '@/components/themed/ThemedSelectDropdown';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
+import { ThemedView } from '@/components/themed/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { faculties } from '@/constants/Data';
 import { Feather, Ionicons } from '@expo/vector-icons';

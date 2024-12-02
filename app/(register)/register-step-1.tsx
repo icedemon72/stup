@@ -3,13 +3,14 @@ import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
 import { AntDesign, Feather } from '@expo/vector-icons';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { useRouter } from 'expo-router';
 
 import GenderView from '@/components/ui/GenderView';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import NavigationArrows from '@/components/ui/NavigationArrows';
+import HelpButton from '@/components/ui/HelpButton';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -23,29 +24,27 @@ const RegisterStepOne = () => {
 	}
 
 	return (
-		<View style={ styles.container }>
+		<SafeAreaView style={ styles.container }>
 			<ThemedView style={ styles.inputContainer }>
 				<RelativeLogo />
+				<HelpButton title='Pomoć' text='Pritisnite pol da biste ga izabrali. Ove informacije služe prilikom prikazivanja relevantnih STUPitnika, kao i za (eventualno) prikupljanje podataka od strane STUPitivača.' />
+				<View style={styles.inputContent}>
+					<View>
+						<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Registracija</ThemedText>
+						<ThemedText style={{ marginVertical: 20 }}>Započnimo proces registracije na STUP. Možeš li nam reći kojeg si pola?</ThemedText>
+						<ThemedView style={styles.genderContainer}>
+							<GenderView gender='M' selectedGender={gender} onPress={() => setGender('M')} />
+							<GenderView gender='F' selectedGender={gender} onPress={() => setGender('F')} />
+						</ThemedView>
+						<ThemedText style={{ textAlign: 'center' }} textColor='muted'>Pol</ThemedText>
+					</View>
 				
-				<TouchableOpacity style={{ position: 'absolute', right: 0, top: 0, paddingRight: 30, paddingTop: 20 }}>
-					<ThemedText lightColor={Colors.light.muted} darkColor={Colors.dark.muted}>
-						<AntDesign name="questioncircleo" size={24} />
-					</ThemedText>
-				</TouchableOpacity>
-				
-				<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Registracija</ThemedText>
-				<ThemedText style={{ marginTop: 20, }}>Započnimo proces registracije na STUP. Možeš li nam reći kojeg si pola?</ThemedText>
-				<ThemedView style={styles.genderContainer}>
-					<GenderView gender='M' selectedGender={gender} onPress={() => setGender('M')} />
-					<GenderView gender='F' selectedGender={gender} onPress={() => setGender('F')} />
-				</ThemedView>
-				<ThemedText style={{ textAlign: 'center', marginBottom: 10 }} textColor='muted'>Pol</ThemedText>
-
-				<View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-					<NavigationArrows isFirst handleNext={handleNext} />
+					<View>
+						<NavigationArrows isFirst handleNext={handleNext} />
+					</View>
 				</View>
 			</ThemedView>
-		</View>
+		</SafeAreaView>
 	);
 }
 
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
 	
 	// GENDER
 	genderContainer: {
-		marginTop: 20,
 		paddingHorizontal: 50,
 		flexDirection: 'row',
 		justifyContent: 'space-between',	
@@ -90,6 +88,10 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 50,
 		minHeight: screenHeight * 0.70
 	},
+	inputContent: {
+		justifyContent: 'space-between',
+		flex: 1
+	}
 });
 
 

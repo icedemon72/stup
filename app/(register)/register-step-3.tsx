@@ -17,7 +17,6 @@ const RegisterStepThree = () => {
 	const router = useRouter();
 	const { gender, step, setStep, dateOfBirth, setDateOfBirth, name, setName } = useRegisterContext();
 
-	const [ hasDateChanged, setHasDateChanged ] = useState<boolean>(false);
 	const [ showDatePicker, setShowDatePicker ] = useState<boolean>(false);
 
 	const handleNext = () => {
@@ -31,7 +30,6 @@ const RegisterStepThree = () => {
 
 	const handleDateChange = (e: any, selectedDate: any) => {
 		if(e.type === 'set') {
-			setHasDateChanged(true);
 			setDateOfBirth(selectedDate);
 		}
 
@@ -43,73 +41,77 @@ const RegisterStepThree = () => {
 				<ThemedView style={ styles.inputContainer }>
 					<RelativeLogo />
 					
-					<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Ime i datum rodjenja</ThemedText>
-					<ThemedText style={{ marginTop: 20, }}>Skoro smo gotovi! Potrebno je da uneseš svoje ime i prezime, kao i datum rodjenja!</ThemedText>
-					
-					<ThemedView
-						style={styles.inputField}
-						lightColor={Colors.light.backgroundSecondary}
-						darkColor={Colors.dark.backgroundSecondary}
-					>
-						<ThemedText>
-							<MaterialCommunityIcons name={gender === 'M' ? 'face-man-outline' : 'face-woman-outline' } size={24} />
-						</ThemedText>
-						<ThemedTextInput
-							placeholder='Ime i prezime'
-							autoCapitalize='words'
-							style={{ flex: 1 }}
-							onChangeText={setName}
-							value={name}
-							lightColor={Colors.light.backgroundSecondary}
-							darkColor={Colors.dark.backgroundSecondary}
-						/>
+					<View style={styles.inputContent}>
+						<View>
+							<View>
+								<ThemedText style={{ textAlign: 'center' }} type='subtitle'>
+									Ime i datum rodjenja
+								</ThemedText>
+								<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
+									Skoro smo gotovi! Sada je potrebno da uneseš svoje ime i prezime, kao i datum rodjenja!
+								</ThemedText>
 
-					</ThemedView>
-					
-					<TouchableOpacity
-							onPress={() => setShowDatePicker(true)}
-					>
-						<ThemedView 
-							style={ styles.inputField }
-							lightColor={Colors.light.backgroundSecondary} 
-							darkColor={Colors.dark.backgroundSecondary}
-						>
-							<ThemedText>
-								<Feather name="calendar" size={24} />
-							</ThemedText>
-							{
-								dateOfBirth ? 
-								<>
-									<ThemedText style={{ flex: 1 }}>
-										{ new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(dateOfBirth) }
-									</ThemedText>
-									<ThemedText onPress={() => setHasDateChanged(false)}>
-										<Feather name="x" size={24} />
-									</ThemedText>
-								</>
-								:
-								<ThemedText lightColor={Colors.light.muted} darkColor={Colors.dark.muted}>
-									Izaberite datum rodjenja
-								</ThemedText> 
-							}
-								
-						</ThemedView>
+							</View>
 
-					</TouchableOpacity>
+							<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+								<ThemedText>
+									<MaterialCommunityIcons name={gender === 'M' ? 'face-man-outline' : 'face-woman-outline'} size={24} />
+								</ThemedText>
+								<ThemedTextInput
+									placeholder='Ime i prezime'
+									autoCapitalize='words'
+									style={{ flex: 1 }}
+									onChangeText={setName}
+									value={name}
+									backgroundKey='backgroundSecondary'
+								/>
+
+							</ThemedView>
+
+							<TouchableOpacity
+								onPress={() => setShowDatePicker(true)}
+							>
+								<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+									<ThemedText>
+										<Feather name="calendar" size={24} />
+									</ThemedText>
+									{
+										dateOfBirth ?
+											<>
+												<ThemedText style={{ flex: 1 }}>
+													{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(dateOfBirth)}
+												</ThemedText>
+												<ThemedText onPress={() =>  setDateOfBirth(null)}>
+													<Feather name="x" size={24} />
+												</ThemedText>
+											</>
+											:
+											<ThemedText textColor='muted'>
+												Izaberite datum rodjenja
+											</ThemedText>
+									}
+
+								</ThemedView>
+
+							</TouchableOpacity>
+						</View>
+						
+						<View>
+							<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+						</View>
+					</View>
 
 					{
 						showDatePicker && 
 						<DateTimePicker
-							value={new Date()}
+							value={dateOfBirth || new Date()}
 							mode="date"
 							display="spinner"
 							onChange={handleDateChange}
 						/>
 					}
 
-					<View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-						<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
-					</View>
+					
 				</ThemedView>
 		</View>
 	);
@@ -141,6 +143,10 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		borderRadius: 10
 	},
+	inputContent: {
+		justifyContent: 'space-between',
+		flex: 1
+	}
 });
 
 export default RegisterStepThree;

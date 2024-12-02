@@ -26,17 +26,18 @@ const RegisterStepFour = () => {
 
 	return (
 		<View style={ styles.container }>
-				<ThemedView style={ styles.inputContainer }>
-					<RelativeLogo />
-					
-					<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Ime i datum rodjenja</ThemedText>
-					<ThemedText style={{ marginTop: 20, }}>Još samo ovo, na kom fakultetu studiraš?</ThemedText>
-					
-					<ThemedView 
-						lightColor={Colors.light.backgroundSecondary} 
-						darkColor={Colors.dark.backgroundSecondary}
-						style={{ height: 50, borderRadius: 10 }}
-					>
+			<ThemedView style={ styles.inputContainer }>
+			<RelativeLogo />
+			
+			<View style={styles.inputContent}>
+				<View>
+
+					<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Fakultet</ThemedText>
+					<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
+						Još samo ovo, na kom fakultetu studiraš?
+					</ThemedText>
+
+					<ThemedView style={{ height: 50, borderRadius: 10 }} backgroundKey='backgroundSecondary'>
 						<ThemedSelectDropdown
 							data={faculties}
 							onSelect={(selectedItem) => setFaculty(selectedItem)}
@@ -51,13 +52,13 @@ const RegisterStepFour = () => {
 										</ThemedText>
 										<ThemedText><Feather name="chevron-down" size={24} /></ThemedText>
 										{/* Fix the chevron... */}
-										
+
 									</ThemedView>
 								);
 							}}
 							renderItem={(item, index, isSelected) => {
 								return (
-									<ThemedView 
+									<ThemedView
 										style={{ ...styles.dropdownItemStyle }}
 										darkColor={isSelected ? '#D2D9DF' : undefined}
 									>
@@ -69,12 +70,15 @@ const RegisterStepFour = () => {
 							dropdownStyle={styles.dropdownMenuStyle}
 						/>
 					</ThemedView>
+				</View>
 					
-					<View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-						<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
-					</View>
-				</ThemedView>
+				<View>
+					<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+				</View>
 			</View>
+
+			</ThemedView>
+		</View>
 	);
 }
 
@@ -103,6 +107,10 @@ const styles = StyleSheet.create({
 		gap: 5,
 		paddingHorizontal: 10,
 		borderRadius: 10
+	},
+	inputContent: {
+		justifyContent: 'space-between',
+		flex: 1
 	},
 
 	// DROPDOWN

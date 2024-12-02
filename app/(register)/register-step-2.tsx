@@ -5,12 +5,13 @@ import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { Colors } from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import { Dimensions, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import { ThemedView } from '@/components/themed/ThemedView';
 import RelativeLogo from '@/components/ui/RelativeLogo';
+import HelpButton from '@/components/ui/HelpButton';
+import { InfoTexts } from '@/constants/Texts';
 
-const screenHeight = Dimensions.get('screen').height;
 
 const RegisterStepTwo = () => {
 	const router = useRouter();
@@ -27,45 +28,45 @@ const RegisterStepTwo = () => {
 		router.replace('/(register)/register-step-1' as RelativePathString);
 	}
 
+	const checkEmail = () => {
+		
+	}
+
 	return (
-		<View style={ styles.container }>
-				{/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} /> */}
-				<ThemedView style={styles.inputContainer}>
-					<RelativeLogo />
-					{/* Email */}
-					<ScrollView style={{ height: '75%' }}>
-					<ThemedText style={{ textAlign: 'center' }} type='subtitle'>E-adresa i lozinka</ThemedText>
-					<ThemedText style={{ marginTop: 20, }}>Da li bi {gender === 'M' ? 'mogao' : 'mogla'} da uneseš svoju e-adresu i lozinku? Bolje ih zapamti jer će ti trebati prilikom prijave!</ThemedText>
-						{/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}> */}
-							
-							<ThemedView
-								style={styles.inputField}
-								lightColor={Colors.light.backgroundSecondary}
-								darkColor={Colors.dark.backgroundSecondary}
-							>
-								<ThemedText>
-									<Feather name="mail" size={24} />
-								</ThemedText>
-								<ThemedTextInput
-									placeholder='E-adresa'
-									autoComplete='email'
-									inputMode='email'
-									autoCapitalize='none'
-									style={{ flex: 1 }}
-									onChangeText={setEmail}
-									value={email}
-									lightColor={Colors.light.backgroundSecondary}
-									darkColor={Colors.dark.backgroundSecondary}
-								/>
+		<View style={styles.container}>
+			<ThemedView style={styles.inputContainer}>
+				<RelativeLogo />
+				<HelpButton title='Pomoć' text={InfoTexts.emailPassword} />
+				
+				<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.inputContent}>
+					<View>
+						<ThemedText style={{ textAlign: 'center' }} type='subtitle'>E-adresa i lozinka</ThemedText>
+						<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
+								Da li bi {gender === 'M' ? 'mogao' : 'mogla'} da uneseš svoju e-adresu i lozinku? Bolje ih zapamti jer će ti trebati prilikom prijave!
+						</ThemedText>
 
-							</ThemedView>
+						{/* E-mail  */}
+						<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+							<ThemedText>
+								<Feather name="mail" size={24} />
+							</ThemedText>
+							<ThemedTextInput
+								placeholder='E-adresa'
+								autoComplete='email'
+								inputMode='email'
+								autoCapitalize='none'
+								autoFocus
+								style={{ flex: 1 }}
+								onChangeText={setEmail}
+								value={email}
+								backgroundKey='backgroundSecondary'
+							/>
 
-							{/* Password */}
-							<ThemedView
-								style={styles.inputField}
-								lightColor={Colors.light.backgroundSecondary}
-								darkColor={Colors.dark.backgroundSecondary}
-							>
+						</ThemedView>
+
+						{/* Password */}
+						<View>
+							<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 								<ThemedText>
 									<Feather name="lock" size={24} />
 								</ThemedText>
@@ -76,25 +77,28 @@ const RegisterStepTwo = () => {
 									inputMode='text'
 									secureTextEntry={!passwordShown}
 									autoCapitalize='none'
-									lightColor={Colors.light.backgroundSecondary}
-									darkColor={Colors.dark.backgroundSecondary}
 									onChangeText={setPassword}
 									value={password}
 									style={{ flex: 1 }}
+									backgroundKey='backgroundSecondary'
 								/>
 
 								<ThemedText onPress={() => setPasswordShown((prev) => !prev)}>
 									{!passwordShown ? <Feather name="eye" size={24} /> : <Feather name="eye-off" size={24} />}
 								</ThemedText>
 							</ThemedView>
-						{/* </KeyboardAvoidingView> */}
-
-						<View>
-							<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+							<ThemedText style={{ marginHorizontal: 10, fontSize: 12, marginTop: -10 }} textColor='muted'>
+								* Lozinka mora sadržati bar 6 karaktera
+							</ThemedText>
 						</View>
-					</ScrollView>
-				</ThemedView>
-			</View>
+					</View>
+
+					<View>
+						<NavigationArrows handleNext={handleNext} handlePrevious={handlePrevious} />
+					</View>
+				</KeyboardAvoidingView>
+			</ThemedView>
+		</View>
 	);
 }
 
@@ -112,9 +116,8 @@ const styles = StyleSheet.create({
 		paddingTop: 80,
 		borderTopLeftRadius: 50,
 		borderTopRightRadius: 50,
-		minHeight: '75%'
+		height: '75%'
 	},
-
 	inputField: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -124,6 +127,10 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		borderRadius: 10
 	},
+	inputContent: {
+		justifyContent: 'space-between',
+		flex: 1
+	}
 });
 
 export default RegisterStepTwo;

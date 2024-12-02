@@ -25,22 +25,18 @@ const RegisterStepFour = () => {
 		router.replace('/(register)/register-step-3' as RelativePathString);
 	}
 
-	console.log(faculty);
-
 	return (
 		<View style={ styles.container }>
 			<ThemedView style={ styles.inputContainer }>
 				<RelativeLogo />
 				
-				<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Informacije o registraciji</ThemedText>
-				<ThemedText style={{ marginTop: 20, }}>Proveri podatke još jednom pre registracije!</ThemedText>
+				<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Informacije o nalogu</ThemedText>
+				<ThemedText style={{ marginVertical: 20, textAlign: 'center' }} textColor='muted'>
+					Proveri podatke još jednom pre registracije!
+				</ThemedText>
 				
 				{/* E-mail */}
-				<ThemedView
-					style={styles.inputField}
-					lightColor={Colors.light.backgroundSecondary}
-					darkColor={Colors.dark.backgroundSecondary}
-				>
+				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 					<ThemedText>
 						<Feather name="mail" size={24} />
 					</ThemedText>
@@ -52,18 +48,13 @@ const RegisterStepFour = () => {
 						style={{ flex: 1 }}
 						editable={false}
 						value={email}
-						lightColor={Colors.light.backgroundSecondary}
-						darkColor={Colors.dark.backgroundSecondary}
+						backgroundKey='backgroundSecondary'
 					/>
 
 				</ThemedView>
 
 				{/* Password */}
-				<ThemedView
-					style={styles.inputField}
-					lightColor={Colors.light.backgroundSecondary}
-					darkColor={Colors.dark.backgroundSecondary}
-				>
+				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 					<ThemedText>
 						<Feather name="lock" size={24} />
 					</ThemedText>
@@ -74,8 +65,7 @@ const RegisterStepFour = () => {
 						inputMode='text'
 						secureTextEntry={!passwordShown}
 						autoCapitalize='none'
-						lightColor={Colors.light.backgroundSecondary}
-						darkColor={Colors.dark.backgroundSecondary}
+						backgroundKey='backgroundSecondary'
 						onChangeText={setPassword}
 						value={password}
 						editable={false}
@@ -88,11 +78,7 @@ const RegisterStepFour = () => {
 				</ThemedView>
 
 				{/* Name */}
-				<ThemedView
-					style={styles.inputField}
-					lightColor={Colors.light.backgroundSecondary}
-					darkColor={Colors.dark.backgroundSecondary}
-				>
+				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 					<ThemedText>
 						<MaterialCommunityIcons name={gender === 'M' ? 'face-man-outline' : 'face-woman-outline' } size={24} />
 					</ThemedText>
@@ -104,18 +90,13 @@ const RegisterStepFour = () => {
 						// onChangeText={setName}
 						editable={false}
 						value={name}
-						lightColor={Colors.light.backgroundSecondary}
-						darkColor={Colors.dark.backgroundSecondary}
+						backgroundKey='backgroundSecondary'
 					/>
 
 				</ThemedView>
 
 				{/* Date of birth */}
-				<ThemedView 
-					style={ styles.inputField }
-					lightColor={Colors.light.backgroundSecondary} 
-					darkColor={Colors.dark.backgroundSecondary}
-				>
+				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 					<ThemedText>
 						<Feather name="calendar" size={24} />
 					</ThemedText>
@@ -126,19 +107,14 @@ const RegisterStepFour = () => {
 				</ThemedView>
 
 				{/* Faculty */}
-				<ThemedView
-					style={styles.inputField}
-					lightColor={Colors.light.backgroundSecondary}
-					darkColor={Colors.dark.backgroundSecondary}
-				>
+				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
 					<ThemedText>
 						<Ionicons name="school-outline" size={24} />
 					</ThemedText>
 
 					<ThemedTextInput
 						inputMode='text'
-						lightColor={Colors.light.backgroundSecondary}
-						darkColor={Colors.dark.backgroundSecondary}
+						backgroundKey='backgroundSecondary'
 						editable={false}
 						value={faculty!.name}
 						style={{ flex: 1 }}
