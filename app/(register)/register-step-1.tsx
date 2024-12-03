@@ -2,16 +2,14 @@ import React from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
-import { Dimensions, SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { InfoTexts } from '@/constants/Texts';
 
 import GenderView from '@/components/ui/GenderView';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import HelpButton from '@/components/ui/HelpButton';
-import { InfoTexts } from '@/constants/Texts';
-
-const screenHeight = Dimensions.get('screen').height;
 
 const RegisterStepOne = () => {
 	const router = useRouter();
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 		paddingTop: 80,
 		borderTopLeftRadius: 50,
 		borderTopRightRadius: 50,
-		minHeight: screenHeight * 0.70
+		minHeight: '75%'
 	},
 	inputContent: {
 		justifyContent: 'space-between',

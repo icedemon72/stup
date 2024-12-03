@@ -19,7 +19,7 @@ const RegisterStepFour = () => {
 	const router = useRouter();
 
 	const handleRegister = async () => {
-		const data = { email, password, name, gender, dateOfBirth, faculty };
+		const data = { name, gender, dateOfBirth, faculty };
 		
 		try {
 			setIsLoading(true);

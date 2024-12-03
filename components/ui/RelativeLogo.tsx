@@ -5,16 +5,21 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+type RelativeLogoProps = {
+	name?: keyof typeof Ionicons.glyphMap;
+	size?: number;
+}
+
 const screenWidth = Dimensions.get('window').width;
 
-const RelativeLogo = () => {
+const RelativeLogo = ({ name = 'aperture-outline', size = 72 }: RelativeLogoProps ) => {
 	const { colors } = useTheme();
 	const backgroundColor = useThemeColor({ light: Colors.light.background, dark: Colors.dark.background }, 'background');
 	
 	return (
 		<View style={{ ...styles.circleContainer, backgroundColor: colors.background }}>
 			<View style={{ ...styles.logoContainer, backgroundColor }}>
-				<Ionicons name="aperture-outline" size={72}  color={ colors.text } />
+				<Ionicons name={name} size={size}  color={ colors.text } />
 			</View>
 		</View>
 	);

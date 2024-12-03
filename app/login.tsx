@@ -11,8 +11,8 @@ import RelativeLogo from '@/components/ui/RelativeLogo';
 import Feather from '@expo/vector-icons/Feather';
 
 const Login: React.FC = () => {
-	const [ email, setEmail ] = useState<string>('');
-	const [ password, setPassword ] = useState<string>('');
+	const [ email, setEmail ] = useState<string>('123@gmail.com');
+	const [ password, setPassword ] = useState<string>('123456');
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
 	const { signIn, isLoading, session } = useSession();
 

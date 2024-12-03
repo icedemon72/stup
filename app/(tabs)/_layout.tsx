@@ -1,13 +1,16 @@
 import { useSession } from "@/components/contexts/AuthContext";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { ThemedText } from "@/components/themed/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme.web";
 import { Redirect, Tabs } from "expo-router";
+import { useEffect, useState } from "react";
+import { Text } from "react-native";
 
 
 const TabsLayout = () => {
 	const { session } = useSession();
-
+	
 	if(!session) {
 		return <Redirect href="/home" />
 	}
@@ -37,7 +40,7 @@ const TabsLayout = () => {
 			<Tabs.Screen name="profile" options={{
 				title: 'Profil',
 				tabBarIcon: ({ color, focused }) => (
-					<TabBarIcon onLongPress={() => console.log('hello')} name={focused ? 'person-circle' : 'person-circle-outline'} color={color} />
+					<TabBarIcon name={focused ? 'person-circle' : 'person-circle-outline'} color={color} />
 				),
 			}} />
 		</Tabs>

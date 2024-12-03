@@ -10,6 +10,7 @@ const RegisterLayout = () => {
 	if(session) {
 		return <Redirect href="/(tabs)" />
 	}
+	
   return (
 		<RegisterProvider>
 			<Stack screenOptions={{ 

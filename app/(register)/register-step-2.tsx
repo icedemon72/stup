@@ -4,13 +4,14 @@ import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { Feather } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import NavigationArrows from '@/components/ui/NavigationArrows';
+import { KeyboardAvoidingView, Platform,  StyleSheet, View } from 'react-native';
 import { ThemedView } from '@/components/themed/ThemedView';
-import RelativeLogo from '@/components/ui/RelativeLogo';
-import HelpButton from '@/components/ui/HelpButton';
 import { InfoTexts } from '@/constants/Texts';
 import { StepTwo } from '@/constants/Validators';
+
+import NavigationArrows from '@/components/ui/NavigationArrows';
+import RelativeLogo from '@/components/ui/RelativeLogo';
+import HelpButton from '@/components/ui/HelpButton';
 
 
 const RegisterStepTwo = () => {

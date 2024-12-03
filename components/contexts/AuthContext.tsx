@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut } from "firebase/auth";
-import {auth} from "@/constants/Firebase";
+import { User, onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut } from 'firebase/auth';
+import { auth, db } from '@/constants/Firebase';
+import { LoggedInUser } from '@/types';
+import { doc, getDoc } from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthContextType {
 	signIn: (email: string, password: string) => Promise<void>;
 	signOut: () => Promise<void>;
-	session: User | null;
+	session: LoggedInUser | null;
 	isLoading: boolean;
 }
 
@@ -29,22 +32,43 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-	const [session, setSession] = useState<User | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [ session, setSession ] = useState<LoggedInUser | null>(null);
+	const [ isLoading, setIsLoading ] = useState<boolean>(true);
+
+	const checkIfIsLoggedIn = async () => {
+		try {
+			const user = await AsyncStorage.getItem('user');
+			(user !== null) 
+				? setSession(JSON.parse(user) as LoggedInUser)
+				: setSession(null);
+		} catch (err: any) {
+			console.error(err);
+			setSession(null);
+		}
+	}
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			setSession(user);
-			setIsLoading(false);
-		});
-		return () => unsubscribe();
+		checkIfIsLoggedIn();
 	}, []);
 
 	const signIn = async (email: string, password: string) => {
 		setIsLoading(true);
 		try {
 			const userCredential = await signInWithEmailAndPassword(auth, email, password);
-			setSession(userCredential.user);
+
+			const userRef = doc(db, 'users', userCredential.user.uid);
+			const userData = await getDoc(userRef);
+			
+			const userSession: LoggedInUser = {
+				...userCredential.user,
+				...userData.data()
+			}
+
+			await AsyncStorage.setItem('user', JSON.stringify(userSession));
+						
+			// const userData = await getDoc(doc(db, 'users', userCredential.user.uid));
+			
+			setSession(userSession);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -55,8 +79,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	const signOut = async () => {
 		setIsLoading(true);
 		try {
+			await AsyncStorage.removeItem('user');
 			await firebaseSignOut(auth);
-			console.log('User signed out');
 			setSession(null);
 		} catch (error) {
 			console.error(error);
