@@ -9,6 +9,7 @@ import { Redirect } from 'expo-router';
 
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import Feather from '@expo/vector-icons/Feather';
+import InputContainer from '@/components/ui/InputContainer';
 
 const Login: React.FC = () => {
 	const [ email, setEmail ] = useState<string>('123@gmail.com');
@@ -33,9 +34,8 @@ const Login: React.FC = () => {
 	};
 
 	return (
-		<View style={ styles.container }>
-			<ThemedView style={ styles.inputContainer }>
-				<RelativeLogo />
+		<InputContainer absolute={<RelativeLogo />}>
+			<View>
 				<ThemedText style={{ textAlign: 'center', marginBottom: 20 }} type='subtitle'>Prijava</ThemedText>
 				
 				{/* E-mail */}
@@ -93,8 +93,8 @@ const Login: React.FC = () => {
 				</TouchableOpacity>
 
 				<ThemedText type='default' style={{ textAlign: 'center', textDecorationLine: 'underline', fontSize: 14 }}>Zaboravio/la si lozinku?</ThemedText>
-			</ThemedView>
-		</View>
+			</View>
+		</InputContainer>
 	)
 }
 

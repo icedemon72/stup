@@ -6,12 +6,13 @@ import { ThemedView } from '@/components/themed/ThemedView';
 import { faculties } from '@/constants/Data';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { StepFour } from '@/constants/Validators';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import HelpButton from '@/components/ui/HelpButton';
 import { InfoTexts } from '@/constants/Texts';
+import InputContainer from '@/components/ui/InputContainer';
 
 const RegisterStepFour = () => {
 	const router = useRouter();
@@ -40,11 +41,7 @@ const RegisterStepFour = () => {
 	}, [ faculty ]);
 
 	return (
-		<View style={ styles.container }>
-			<ThemedView style={ styles.inputContainer }>
-			<RelativeLogo />
-			<HelpButton title='Pomoć' text={InfoTexts.faculty} />
-
+		<InputContainer absolute={[<RelativeLogo key='logo' />, <HelpButton title='Pomoć' text={InfoTexts.gender} key='button' />]}>
 			<View style={styles.inputContent}>
 				<View>
 
@@ -77,12 +74,14 @@ const RegisterStepFour = () => {
 							}}
 							renderItem={(item, index, isSelected) => {
 								return (
-									<ThemedView
-										style={{ ...styles.dropdownItemStyle }}
-										darkColor={isSelected ? '#D2D9DF' : undefined}
-									>
-										<ThemedText style={styles.dropdownItemTxtStyle} darkColor={isSelected ? '#D2D9DF' : undefined}>{item.name}</ThemedText>
-									</ThemedView>
+									<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+										<ThemedView
+											style={{ ...styles.dropdownItemStyle }}
+											darkColor={isSelected ? '#D2D9DF' : undefined}
+										>
+											<ThemedText style={styles.dropdownItemTxtStyle} darkColor={isSelected ? '#D2D9DF' : undefined}>{item.name}</ThemedText>
+										</ThemedView>
+									</KeyboardAvoidingView>
 								);
 							}}
 							showsVerticalScrollIndicator={true}
@@ -96,8 +95,7 @@ const RegisterStepFour = () => {
 				</View>
 			</View>
 
-			</ThemedView>
-		</View>
+		</InputContainer>
 	);
 }
 

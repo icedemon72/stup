@@ -14,6 +14,7 @@ import RelativeLogo from '@/components/ui/RelativeLogo';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import HelpButton from '@/components/ui/HelpButton';
 import { InfoTexts } from '@/constants/Texts';
+import InputContainer from '@/components/ui/InputContainer';
 
 const RegisterStepThree = () => {
 	const router = useRouter();
@@ -50,86 +51,81 @@ const RegisterStepThree = () => {
 	}, [ name, dateOfBirth ])
 
 	return (
-		<View style={ styles.container }>
-				<ThemedView style={ styles.inputContainer }>
-					<RelativeLogo />
-					<HelpButton title='Pomoć' text={InfoTexts.nameAndDate} />
+		<InputContainer absolute={[<RelativeLogo key='logo' />, <HelpButton title='Pomoć' text={InfoTexts.gender} key='button' />]}>
+			<View style={styles.inputContent}>
+				<View>
+					<View>
+						<ThemedText style={{ textAlign: 'center' }} type='subtitle'>
+							Ime i datum rodjenja
+						</ThemedText>
+						<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
+							Skoro smo gotovi! Sada je potrebno da uneseš svoje ime i prezime, kao i datum rodjenja!
+						</ThemedText>
 
-					<View style={styles.inputContent}>
-						<View>
-							<View>
-								<ThemedText style={{ textAlign: 'center' }} type='subtitle'>
-									Ime i datum rodjenja
-								</ThemedText>
-								<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
-									Skoro smo gotovi! Sada je potrebno da uneseš svoje ime i prezime, kao i datum rodjenja!
-								</ThemedText>
-
-							</View>
-
-							<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-								<ThemedText>
-									{ 
-										gender === 'M' 
-										? <MaterialCommunityIcons name='face-man-outline' size={24} />
-										: <MaterialCommunityIcons name='face-woman-outline' size={24} />
-									}
-								</ThemedText>
-								<ThemedTextInput
-									placeholder='Ime i prezime'
-									autoCapitalize='words'
-									style={{ flex: 1 }}
-									onChangeText={setName}
-									value={name}
-									backgroundKey='backgroundSecondary'
-								/>
-
-							</ThemedView>
-
-							<TouchableOpacity
-								onPress={() => setShowDatePicker(true)}
-							>
-								<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-									<ThemedText>
-										<Feather name="calendar" size={24} />
-									</ThemedText>
-									{
-										dateOfBirth ?
-											<>
-												<ThemedText style={{ flex: 1 }}>
-													{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(dateOfBirth)}
-												</ThemedText>
-												<ThemedText onPress={() =>  setDateOfBirth(null)}>
-													<Feather name="x" size={24} />
-												</ThemedText>
-											</>
-											:
-											<ThemedText textColor='muted'>
-												Izaberite datum rodjenja
-											</ThemedText>
-									}
-
-								</ThemedView>
-
-							</TouchableOpacity>
-						</View>
-						
-						<View>
-							<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious} />
-						</View>
 					</View>
 
-					{
-						showDatePicker && 
-						<DateTimePicker
-							value={dateOfBirth || new Date()}
-							mode="date"
-							display="spinner"
-							onChange={handleDateChange}
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText>
+							{
+								gender === 'M'
+									? <MaterialCommunityIcons name='face-man-outline' size={24} />
+									: <MaterialCommunityIcons name='face-woman-outline' size={24} />
+							}
+						</ThemedText>
+						<ThemedTextInput
+							placeholder='Ime i prezime'
+							autoCapitalize='words'
+							style={{ flex: 1 }}
+							onChangeText={setName}
+							value={name}
+							backgroundKey='backgroundSecondary'
 						/>
-					}
-				</ThemedView>
-		</View>
+
+					</ThemedView>
+
+					<TouchableOpacity
+						onPress={() => setShowDatePicker(true)}
+					>
+						<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+							<ThemedText>
+								<Feather name="calendar" size={24} />
+							</ThemedText>
+							{
+								dateOfBirth ?
+									<>
+										<ThemedText style={{ flex: 1 }}>
+											{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(dateOfBirth)}
+										</ThemedText>
+										<ThemedText onPress={() => setDateOfBirth(null)}>
+											<Feather name="x" size={24} />
+										</ThemedText>
+									</>
+									:
+									<ThemedText textColor='muted'>
+										Izaberite datum rodjenja
+									</ThemedText>
+							}
+
+						</ThemedView>
+
+					</TouchableOpacity>
+				</View>
+
+				<View>
+					<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious} />
+				</View>
+			</View>
+
+			{
+				showDatePicker &&
+				<DateTimePicker
+					value={dateOfBirth || new Date()}
+					mode="date"
+					display="spinner"
+					onChange={handleDateChange}
+				/>
+			}
+		</InputContainer>
 	);
 }
 

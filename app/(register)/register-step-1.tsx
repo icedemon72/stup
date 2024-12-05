@@ -2,7 +2,7 @@ import React from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { InfoTexts } from '@/constants/Texts';
 
@@ -10,6 +10,7 @@ import GenderView from '@/components/ui/GenderView';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import HelpButton from '@/components/ui/HelpButton';
+import InputContainer from '@/components/ui/InputContainer';
 
 const RegisterStepOne = () => {
 	const router = useRouter();
@@ -21,36 +22,25 @@ const RegisterStepOne = () => {
 	}
 
 	return (
-		<SafeAreaView style={ styles.container }>
-			<ThemedView style={ styles.inputContainer }>
-				<RelativeLogo />
-				<HelpButton title='Pomoć' text={InfoTexts.gender} />
-				<View style={styles.inputContent}>
-					<View>
-						<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Registracija</ThemedText>
-						<ThemedText style={{ marginVertical: 20 }}>Započnimo proces registracije na STUP. Možeš li nam reći kojeg si pola?</ThemedText>
-						<ThemedView style={styles.genderContainer}>
-							<GenderView gender='M' selectedGender={gender} onPress={() => setGender('M')} />
-							<GenderView gender='F' selectedGender={gender} onPress={() => setGender('F')} />
-						</ThemedView>
-						<ThemedText style={{ textAlign: 'center' }} textColor='muted'>Pol</ThemedText>
-					</View>
-				
-					<View>
-						<NavigationArrows isFirst handleNext={handleNext} />
-					</View>
-				</View>
-			</ThemedView>
-		</SafeAreaView>
+		<InputContainer absolute={[<RelativeLogo key='logo' />, <HelpButton title='Pomoć' text={InfoTexts.gender} key='button' />]}>
+			<View>
+				<ThemedText style={{ textAlign: 'center' }} type='subtitle'>Registracija</ThemedText>
+				<ThemedText style={{ marginVertical: 20 }} textColor='muted'>Započnimo proces registracije na STUP. Možeš li nam reći kojeg si pola?</ThemedText>
+				<ThemedView style={styles.genderContainer}>
+					<GenderView gender='M' selectedGender={gender} onPress={() => setGender('M')} />
+					<GenderView gender='F' selectedGender={gender} onPress={() => setGender('F')} />
+				</ThemedView>
+				<ThemedText style={{ textAlign: 'center' }} textColor='muted'>Pol</ThemedText>
+			</View>
+		
+			<View>
+				<NavigationArrows isFirst handleNext={handleNext} />
+			</View>
+		</InputContainer>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignContent: 'center',
-	},
 	
 	// GENDER
 	genderContainer: {
@@ -76,15 +66,6 @@ const styles = StyleSheet.create({
 		left: 3
 	},
 
-	// INPUT
-	inputContainer: {
-		position: 'relative',
-		padding: 15,
-		paddingTop: 80,
-		borderTopLeftRadius: 50,
-		borderTopRightRadius: 50,
-		minHeight: '75%'
-	},
 	inputContent: {
 		justifyContent: 'space-between',
 		flex: 1

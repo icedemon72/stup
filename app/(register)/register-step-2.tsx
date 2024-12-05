@@ -12,6 +12,7 @@ import { StepTwo } from '@/constants/Validators';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import HelpButton from '@/components/ui/HelpButton';
+import InputContainer from '@/components/ui/InputContainer';
 
 
 const RegisterStepTwo = () => {
@@ -41,91 +42,69 @@ const RegisterStepTwo = () => {
 	}, [ email, password ])
 
 	return (
-		<View style={styles.container}>
-			<ThemedView style={styles.inputContainer}>
-				<RelativeLogo />
-				<HelpButton title='Pomoć' text={InfoTexts.emailPassword} />
-				
-				<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.inputContent}>
-					<View>
-						<ThemedText style={{ textAlign: 'center' }} type='subtitle'>E-adresa i lozinka</ThemedText>
-						<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
-								Da li bi {gender === 'M' ? 'mogao' : 'mogla'} da uneseš svoju e-adresu i lozinku? Bolje ih zapamti jer će ti trebati prilikom prijave!
+		<InputContainer absolute={[<RelativeLogo key='logo' />, <HelpButton title='Pomoć' text={InfoTexts.gender} key='button' />]}>		
+			<View>
+				<ThemedText style={{ textAlign: 'center' }} type='subtitle'>E-adresa i lozinka</ThemedText>
+				<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
+						Da li bi {gender === 'M' ? 'mogao' : 'mogla'} da uneseš svoju e-adresu i lozinku? Bolje ih zapamti jer će ti trebati prilikom prijave!
+				</ThemedText>
+
+				{/* E-mail  */}
+				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+					<ThemedText>
+						<Feather name="mail" size={24} />
+					</ThemedText>
+					<ThemedTextInput
+						placeholder='E-adresa'
+						autoComplete='email'
+						inputMode='email'
+						autoCapitalize='none'
+						autoFocus={!email.length}
+						style={{ flex: 1 }}
+						onChangeText={setEmail}
+						value={email}
+						backgroundKey='backgroundSecondary'
+					/>
+
+				</ThemedView>
+
+				{/* Password */}
+				<View>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText>
+							<Feather name="lock" size={24} />
 						</ThemedText>
 
-						{/* E-mail  */}
-						<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-							<ThemedText>
-								<Feather name="mail" size={24} />
-							</ThemedText>
-							<ThemedTextInput
-								placeholder='E-adresa'
-								autoComplete='email'
-								inputMode='email'
-								autoCapitalize='none'
-								autoFocus={!email.length}
-								style={{ flex: 1 }}
-								onChangeText={setEmail}
-								value={email}
-								backgroundKey='backgroundSecondary'
-							/>
+						<ThemedTextInput
+							placeholder='Lozinka'
+							autoComplete='password'
+							inputMode='text'
+							secureTextEntry={!passwordShown}
+							autoCapitalize='none'
+							onChangeText={setPassword}
+							value={password}
+							style={{ flex: 1 }}
+							backgroundKey='backgroundSecondary'
+						/>
 
-						</ThemedView>
+						<ThemedText onPress={() => setPasswordShown((prev) => !prev)}>
+							{!passwordShown ? <Feather name="eye" size={24} /> : <Feather name="eye-off" size={24} />}
+						</ThemedText>
+					</ThemedView>
+					<ThemedText style={{ marginHorizontal: 10, fontSize: 12, marginTop: -10 }} textColor='muted'>
+						* Lozinka mora sadržati bar 6 karaktera
+					</ThemedText>
+				</View>
+			</View>
 
-						{/* Password */}
-						<View>
-							<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-								<ThemedText>
-									<Feather name="lock" size={24} />
-								</ThemedText>
-
-								<ThemedTextInput
-									placeholder='Lozinka'
-									autoComplete='password'
-									inputMode='text'
-									secureTextEntry={!passwordShown}
-									autoCapitalize='none'
-									onChangeText={setPassword}
-									value={password}
-									style={{ flex: 1 }}
-									backgroundKey='backgroundSecondary'
-								/>
-
-								<ThemedText onPress={() => setPasswordShown((prev) => !prev)}>
-									{!passwordShown ? <Feather name="eye" size={24} /> : <Feather name="eye-off" size={24} />}
-								</ThemedText>
-							</ThemedView>
-							<ThemedText style={{ marginHorizontal: 10, fontSize: 12, marginTop: -10 }} textColor='muted'>
-								* Lozinka mora sadržati bar 6 karaktera
-							</ThemedText>
-						</View>
-					</View>
-
-					<View>
-						<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious}  />
-					</View>
-				</KeyboardAvoidingView>
-			</ThemedView>
-		</View>
+			<View>
+				<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} handlePrevious={handlePrevious}  />
+			</View>
+		</InputContainer>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignContent: 'center',
-	},
-
-	// INPUT
-	inputContainer: {
-		position: 'relative',
-		padding: 15,
-		paddingTop: 80,
-		borderTopLeftRadius: 50,
-		borderTopRightRadius: 50,
-		height: '75%'
-	},
 	inputField: {
 		flexDirection: 'row',
 		alignItems: 'center',

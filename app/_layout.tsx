@@ -39,7 +39,7 @@ const RootLayout = () => {
 					<Stack.Screen name='home' />
 					<Stack.Screen name='(tabs)' />
 				</Stack>
-				<StatusBar style="auto" />
+				<StatusBar style="light" />
 			</ThemeProvider>
 		</AuthProvider>
 	);

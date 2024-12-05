@@ -17,6 +17,7 @@ const InfoModal = ({ title = 'Info', subtitle, text = '', closeFunc }: InfoModal
 			visible={true}
 			transparent={true}
 			onRequestClose={() => closeFunc()}
+			statusBarTranslucent
 		>
 			<View style={styles.container}>
 				<ThemedView style={styles.card}>

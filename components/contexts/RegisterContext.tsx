@@ -37,7 +37,7 @@ export const RegisterContext = createContext<RegisterContextType> ({
 
 
 interface RegisterProviderProps {
-	children: ReactNode
+	children: ReactNode;
 }
 
 export const useRegisterContext = () => {
@@ -50,7 +50,7 @@ export const useRegisterContext = () => {
 
 export function RegisterProvider({ children }: RegisterProviderProps) {
 	const [ email, setEmail ] = useState<string>('123@gmail.com');
-	const [ name, setName ] = useState<string>('Milos');
+	const [ name, setName ] = useState<string>('');
 	const [ gender, setGender ] = useState<string>('M');
 	const [ faculty, setFaculty ] = useState<FacultyType | null>(null); // This should be interface with name and id
 	const [ password, setPassword ] = useState<string>('123456')

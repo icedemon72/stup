@@ -17,7 +17,7 @@ const Index = () => {
 		<ThemedView style={ styles.profileContainer }>
 			<RelativeLogo name='person-outline' size={48} />
 
-			<ThemedText type='subtitle' style={{ textAlign: 'center', marginBottom: 10 }} textColor='muted'>{ session?.name ?? session!.email }</ThemedText>
+			<ThemedText type='subtitle' style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 30 }} textColor='muted'>{ session?.name ?? session!.email }</ThemedText>
 			
 			<ThemedTouchableOpacity style={styles.pressable}>
 				<ThemedText style={{ position: 'absolute', left: 10 }}><Ionicons name='person-outline' size={24} /></ThemedText>
