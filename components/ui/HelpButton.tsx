@@ -10,7 +10,7 @@ const HelpButton = ({ title, subtitle, text }: InfoModalProps) => {
 	
 	return (
 		<>
-			<TouchableOpacity onPress={() => setIsModalOpened(true)} style={{ position: 'absolute', right: 0, top: 0, paddingRight: 30, paddingTop: 20 }}>
+			<TouchableOpacity onPress={() => setIsModalOpened(true)} style={styles.container}>
 				<ThemedText lightColor={Colors.light.muted} darkColor={Colors.dark.muted}>
 					<AntDesign name="questioncircleo" size={24} />
 				</ThemedText>
@@ -25,7 +25,13 @@ const HelpButton = ({ title, subtitle, text }: InfoModalProps) => {
 }
 
 const styles = StyleSheet.create({
-
+	container: {
+		position: 'absolute', 
+		right: 0,
+		top: 0,
+		paddingRight: 30,
+		paddingTop: 20
+	}
 })
 
 export default HelpButton;

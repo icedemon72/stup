@@ -1,26 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSurveyContext } from '@/components/contexts/SurveyContext';
 import { ThemedText } from '@/components/themed/ThemedText';
-import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
-import { ThemedView } from '@/components/themed/ThemedView';
 import { defaultQuestion } from '@/constants/Data';
 import { RelativePathString, useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
+import { SurveyInitValidator } from '@/constants/Validators';
 import InputContainer from '@/components/ui/InputContainer';
+import InputField from '@/components/ui/InputField';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import RelativeLogo from '@/components/ui/RelativeLogo';
-import { Question } from '@/types';
 
 const SurveyInit = () => {
 	const router = useRouter();
 	const { 
-		title, setTitle, description, setDescription, questionCount, setQuestionCount, setQuestions
+		questions, title, setTitle, description, setDescription, questionCount, setQuestionCount, setQuestions
 	} = useSurveyContext();
 
+	const [ nextDisabled, setNextDisabled ] = useState<boolean>(true);
+	
 	const handleNext = () => {
-		setQuestions(new Array(questionCount as number).fill(defaultQuestion));
+		setQuestions(new Array(parseInt(questionCount as string)).fill(defaultQuestion));
 		router.navigate('/(surveys)/rules' as RelativePathString);
 	}
+
+	const validateForm = () => {
+		const success: boolean = SurveyInitValidator.safeParse({ title, description, questionCount: parseInt(questionCount as string) }).success;
+		setNextDisabled(!success);
+	}
+
+	useEffect(() => {
+		validateForm();
+	}, [ title, description, questionCount ]);
 
 	return (
 		<InputContainer absolute={<RelativeLogo />}>
@@ -28,61 +38,35 @@ const SurveyInit = () => {
 				<ThemedText type='subtitle' style={{ textAlign: 'center' }}>Kreiraj STUPitnik</ThemedText>
 				<ThemedText textColor='muted' style={{ paddingVertical: 20 }}>Na početku, potrebno je uneti naziv STUPitnika, njegov opis i broj pitanja.</ThemedText>
 			
-				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-					<ThemedTextInput
-						placeholder='Naslov STUPitnika'
-						inputMode='text'
-						autoCapitalize='sentences'
-						style={{ flex: 1 }}
-						onChangeText={setTitle}
-						value={title}
-						backgroundKey='backgroundSecondary'
-					/>
-				</ThemedView>
+				<InputField 
+					placeholder='Naslov STUPitnika'
+					onChangeText={setTitle}
+					value={title}
+				/>
 
-				<ThemedView style={[styles.inputField, { borderBottomRightRadius: 0, borderTopLeftRadius: 0 }]} backgroundKey='backgroundSecondary'>
-					<ThemedTextInput
-						placeholder='Opis STUPitnika'
-						inputMode='text'
-						autoCapitalize='sentences'
-						style={{ flex: 1 }}
-						onChangeText={setDescription}
-						value={description}
-						multiline = {true}
-						backgroundKey='backgroundSecondary'
-					/>
-				</ThemedView>
+				<InputField 
+					placeholder='Opis STUPitnika'
+					onChangeText={setDescription}
+					value={description}
+					multiline={true}
+				/>
 
-				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-					<ThemedTextInput
-						placeholder='Broj pitanja'
-						inputMode='numeric'
-						style={{ flex: 1 }}
-						onChangeText={(text) => setQuestionCount(text.replace(/[^0-9]+$/, ''))}
-						value={questionCount as string}
-						backgroundKey='backgroundSecondary'
-						maxLength={2}
-					/>
-				</ThemedView>
+				<InputField 
+					placeholder='Broj pitanja'
+					inputMode='numeric'
+					onChangeText={(text) => setQuestionCount(text.replace(/[^0-9]+$/, ''))}
+					value={questionCount as string}
+					maxLength={2}
+				/>
 			</View>
 
 			<View>
-				<NavigationArrows nextDisabled={false} handleNext={handleNext} isFirst  />
+				<NavigationArrows nextDisabled={nextDisabled} handleNext={handleNext} isFirst  />
 			</View>
 		</InputContainer>
 	);
 }
 
-const styles = StyleSheet.create({
-	inputField: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		minHeight: 50,
-		marginBottom: 10,
-		gap: 5,
-		paddingHorizontal: 10,
-		borderRadius: 10
-	},
-});
+const styles = StyleSheet.create({});
 
 export default SurveyInit;

@@ -5,3 +5,10 @@ export interface InfoModalProps {
 	subtitle?: string;
 	text?: string;
 }
+
+export type AnswerProps = {
+	answers?: string[];
+	isDropdown?: boolean;
+	response: any;
+	setResponse: (...args: any) => void; // change this perhaps...
+}

@@ -1,9 +1,8 @@
+import React from 'react';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
 import { InfoModalProps } from '@/types/componentTypes';
 import { Feather } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
 import { Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 interface InfoModalExtendedProps extends InfoModalProps {
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
 	},
 	card: {
 		position: 'relative',
-		borderRadius: 50,
+		borderRadius: 20,
 		maxHeight: '80%',
 		width: '90%',
 	},

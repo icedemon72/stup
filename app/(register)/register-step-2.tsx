@@ -1,11 +1,9 @@
 import React, { useEffect, useState }  from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
 import { ThemedText } from '@/components/themed/ThemedText';
-import { ThemedTextInput } from '@/components/themed/ThemedTextInput';
 import { Feather } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import { KeyboardAvoidingView, Platform,  StyleSheet, View } from 'react-native';
-import { ThemedView } from '@/components/themed/ThemedView';
+import { StyleSheet, View } from 'react-native';
 import { InfoTexts } from '@/constants/Texts';
 import { StepTwo } from '@/constants/Validators';
 
@@ -13,11 +11,12 @@ import NavigationArrows from '@/components/ui/NavigationArrows';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import HelpButton from '@/components/ui/HelpButton';
 import InputContainer from '@/components/ui/InputContainer';
+import InputField from '@/components/ui/InputField';
 
 
 const RegisterStepTwo = () => {
 	const router = useRouter();
-	const { gender, step, setStep, email, setEmail, password, setPassword} = useRegisterContext();
+	const { gender, step, setStep, email, setEmail, password, setPassword } = useRegisterContext();
 
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
 	const [ nextDisabled, setNextDisabled ] = useState<boolean>(true);
@@ -50,47 +49,34 @@ const RegisterStepTwo = () => {
 				</ThemedText>
 
 				{/* E-mail  */}
-				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-					<ThemedText>
-						<Feather name="mail" size={24} />
-					</ThemedText>
-					<ThemedTextInput
-						placeholder='E-adresa'
-						autoComplete='email'
-						inputMode='email'
-						autoCapitalize='none'
-						autoFocus={!email.length}
-						style={{ flex: 1 }}
-						onChangeText={setEmail}
-						value={email}
-						backgroundKey='backgroundSecondary'
-					/>
-
-				</ThemedView>
+				<InputField 
+					placeholder='E-adresa'
+					autoComplete='email'
+					inputMode='email'
+					autoCapitalize='none'
+					autoFocus={!email.length}
+					onChangeText={setEmail}
+					value={email}
+					leftIcon={<ThemedText><Feather name="mail" size={24} /></ThemedText>}
+				/>
 
 				{/* Password */}
 				<View>
-					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-						<ThemedText>
-							<Feather name="lock" size={24} />
-						</ThemedText>
-
-						<ThemedTextInput
-							placeholder='Lozinka'
-							autoComplete='password'
-							inputMode='text'
-							secureTextEntry={!passwordShown}
-							autoCapitalize='none'
-							onChangeText={setPassword}
-							value={password}
-							style={{ flex: 1 }}
-							backgroundKey='backgroundSecondary'
-						/>
-
-						<ThemedText onPress={() => setPasswordShown((prev) => !prev)}>
-							{!passwordShown ? <Feather name="eye" size={24} /> : <Feather name="eye-off" size={24} />}
-						</ThemedText>
-					</ThemedView>
+					<InputField 
+						placeholder='Lozinka'
+						autoComplete='password'
+						inputMode='text'
+						secureTextEntry={!passwordShown}
+						autoCapitalize='none'
+						onChangeText={setPassword}
+						value={password}
+						leftIcon={<ThemedText><Feather name="lock" size={24} /></ThemedText>}
+						rightIcon={
+							<ThemedText onPress={() => setPasswordShown((prev) => !prev)}>
+								{!passwordShown ? <Feather name="eye" size={24} /> : <Feather name="eye-off" size={24} />}
+							</ThemedText>
+						}
+					/>
 					<ThemedText style={{ marginHorizontal: 10, fontSize: 12, marginTop: -10 }} textColor='muted'>
 						* Lozinka mora sadržati bar 6 karaktera
 					</ThemedText>
@@ -104,20 +90,6 @@ const RegisterStepTwo = () => {
 	);
 }
 
-const styles = StyleSheet.create({
-	inputField: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		height: 50,
-		marginBottom: 10,
-		gap: 5,
-		paddingHorizontal: 10,
-		borderRadius: 10
-	},
-	inputContent: {
-		justifyContent: 'space-between',
-		flex: 1
-	}
-});
+const styles = StyleSheet.create({});
 
 export default RegisterStepTwo;

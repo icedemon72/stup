@@ -133,7 +133,7 @@ const RegisterStepFour = () => {
 						inputMode='text'
 						backgroundKey='backgroundSecondary'
 						editable={false}
-						value={faculty!.name}
+						value={faculty!.label}
 						style={{ flex: 1 }}
 					/>
 				</ThemedView>

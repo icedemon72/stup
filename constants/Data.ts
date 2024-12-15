@@ -1,21 +1,12 @@
-import { Question } from "@/types";
+import { DataType, Question } from "@/types";
 
-export type FacultyType = {
-	name: string;
-	value: number;
-}
-
-export const faculties: FacultyType[] = [
+export const faculties: DataType[] = [
 	'Ekonomski fakultet', 'Medicinski fakultet', 'Poljoprivredni fakultet', 'Pravni fakultet',
 	'Prirodno-matematički fakultet', 'Učiteljski fakultet', 'Fakultet za sport i fizičko vaspitanje',
 	'Fakultet tehničkih nauka', 'Filozofski fakultet'
-].map((faculty, index) => {
-	return {
-		name: faculty,
-		value: index,
-	}
+].map((label, value) => {
+	return { label, value }
 });
-
 
 export const defaultQuestion: Question = {
 	title: '',
@@ -24,4 +15,16 @@ export const defaultQuestion: Question = {
 	isDropdown: false,
 	answers: [],
 	description: '',
-}
+};
+
+export const questionTypes: DataType[] = [
+	{ label: 'Jedan odgovor', value: 'single' },
+	{ label: 'Više odgovora', value: 'multiple' },
+	{ label: 'Tekstualni unos', value: 'text' },
+];
+
+export const genderRules: DataType[] = [
+	{ label: 'Oba pola', value: 'ANY' },
+	{ label: 'Samo muški pol', value: 'M' },
+	{ label: 'Samo ženski pol', value: 'F' }
+];

@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import HelpButton from '@/components/ui/HelpButton';
 import { InfoTexts } from '@/constants/Texts';
 import InputContainer from '@/components/ui/InputContainer';
+import InputField from '@/components/ui/InputField';
 
 const RegisterStepThree = () => {
 	const router = useRouter();
@@ -64,24 +65,21 @@ const RegisterStepThree = () => {
 
 					</View>
 
-					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-						<ThemedText>
-							{
-								gender === 'M'
-									? <MaterialCommunityIcons name='face-man-outline' size={24} />
-									: <MaterialCommunityIcons name='face-woman-outline' size={24} />
-							}
-						</ThemedText>
-						<ThemedTextInput
-							placeholder='Ime i prezime'
-							autoCapitalize='words'
-							style={{ flex: 1 }}
-							onChangeText={setName}
-							value={name}
-							backgroundKey='backgroundSecondary'
-						/>
-
-					</ThemedView>
+					<InputField 
+						placeholder='Ime i prezime'
+						autoCapitalize='words'
+						onChangeText={setName}
+						value={name}
+						leftIcon={
+							<ThemedText>
+								{
+									gender === 'M'
+										? <MaterialCommunityIcons name='face-man-outline' size={24} />
+										: <MaterialCommunityIcons name='face-woman-outline' size={24} />
+								}
+							</ThemedText>
+						}
+					/>
 
 					<TouchableOpacity
 						onPress={() => setShowDatePicker(true)}
@@ -130,22 +128,6 @@ const RegisterStepThree = () => {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignContent: 'center',
-	},
-
-	// INPUT
-	inputContainer: {
-		position: 'relative',
-		padding: 15,
-		paddingTop: 80,
-		borderTopLeftRadius: 50,
-		borderTopRightRadius: 50,
-		minHeight: '75%'
-	},
-
 	inputField: {
 		flexDirection: 'row',
 		alignItems: 'center',

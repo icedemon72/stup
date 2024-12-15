@@ -1,7 +1,8 @@
+import React from 'react'
 import { useSession } from '@/components/contexts/AuthContext';
 import { SurveyProvider } from '@/components/contexts/SurveyContext';
 import { Redirect, Stack } from 'expo-router';
-import React from 'react'
+import { AnswersProvider } from '@/components/contexts/AnswersContext';
 
 const SurveysLayout = () => {
 	const { session } = useSession();
@@ -12,15 +13,20 @@ const SurveysLayout = () => {
 	
 	return (
 		<SurveyProvider>
-			<Stack screenOptions={{ 
-				headerShown: false
-			}}>
-				<Stack.Screen name='init' />
-				<Stack.Screen name='rules' />
-				<Stack.Screen name='question-add' />
-			</Stack>
+			<AnswersProvider>
+				<Stack screenOptions={{ 
+					headerShown: false
+				}}>
+					<Stack.Screen name='init' />
+					<Stack.Screen name='rules' />
+					<Stack.Screen name='question-add' />
+					<Stack.Screen name='question-final' />
+					<Stack.Screen name='survey-info' />			
+					<Stack.Screen name='survey-answers' />
+				</Stack>
+			</AnswersProvider>
 		</SurveyProvider>
-	)
+	);
 }
 
 export default SurveysLayout;

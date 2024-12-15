@@ -1,5 +1,6 @@
-import { Question, SurveyRules } from "@/types";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { Question, Survey, SurveyRules } from "@/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface SurveyContextType {
 	title: string;
@@ -22,7 +23,7 @@ interface SurveyProviderProps {
 
 const rulesInit: SurveyRules = { 
 	gender: 'ANY',
-	faculties: 'ANY',
+	faculties: [],
 	ageLimit: [-1, -1]
 };
 
@@ -31,7 +32,7 @@ export const SurveyContext = createContext<SurveyContextType>({
 	setTitle: () => {},
 	description: '',
 	setDescription: () => {},
-	questionCount: 1,
+	questionCount: 0,
 	setQuestionCount: () => {},
 	rules: rulesInit,
 	setRules: () => {},
@@ -53,10 +54,28 @@ export const useSurveyContext = () => {
 export const SurveyProvider = ({ children }: SurveyProviderProps) => {
 	const [ title, setTitle ] = useState<string>('');
 	const [ description, setDescription ] = useState<string>('');
-	const [ questionCount, setQuestionCount ] = useState<string | number>(0);
+	const [ questionCount, setQuestionCount ] = useState<string | number>(10);
 	const [ rules, setRules ] = useState<SurveyRules>(rulesInit);
 	const [ questions, setQuestions ] = useState<Question[]>([]);
 	const [ currentQuestion, setCurrentQuestion ] = useState<number>(0);
+
+	// TODO: implement me later...
+	// const checkInDraft = async () => {
+	// 	try {
+	// 		const draftedQuestions = await AsyncStorage.getItem('question');
+
+	// 		(draftedQuestions !== null) 
+	// 			? setQuestions(JSON.parse(draftedQuestions) as Question[])
+	// 			: setQuestions([]);
+
+	// 	} catch(err) {
+	// 		console.error(err);
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	checkInDraft();
+	// }, []);
 
 	return (
 		<SurveyContext.Provider value= {{ 

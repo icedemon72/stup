@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useRegisterContext } from '@/components/contexts/RegisterContext';
-import { ThemedSelectDropdown } from '@/components/themed/ThemedSelectDropdown';
 import { ThemedText } from '@/components/themed/ThemedText';
 import { ThemedView } from '@/components/themed/ThemedView';
 import { faculties } from '@/constants/Data';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { RelativePathString, useRouter } from 'expo-router';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { StepFour } from '@/constants/Validators';
 import NavigationArrows from '@/components/ui/NavigationArrows';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import HelpButton from '@/components/ui/HelpButton';
 import { InfoTexts } from '@/constants/Texts';
 import InputContainer from '@/components/ui/InputContainer';
+import ThemedDropdown from '@/components/themed/dropdowns/ThemedDropdown';
 
 const RegisterStepFour = () => {
 	const router = useRouter();
@@ -49,45 +49,17 @@ const RegisterStepFour = () => {
 					<ThemedText style={{ marginVertical: 20, textAlign: 'justify' }} textColor='muted'>
 						Još samo ovo, na kom fakultetu studiraš?
 					</ThemedText>
-
-					<ThemedView style={{ height: 50, borderRadius: 10 }} backgroundKey='backgroundSecondary'>
-						<ThemedSelectDropdown
+					
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedDropdown 
+							icon={<ThemedText style={{ paddingRight: 5 }}><Ionicons name='school-outline' size={24} /></ThemedText>}
+							placeholder='Izaberite fakultet'
 							data={faculties}
-							onSelect={(selectedItem) => setFaculty(selectedItem)}
-							search={true}
-							searchPlaceHolder='Pretražite fakultete...'
-							defaultValue={faculty}
-							renderButton={(selectedItem, isOpened) => {
-								return (
-									<ThemedView style={styles.dropdownButtonStyle}>
-										<ThemedText><Ionicons name="school-outline" size={24} /></ThemedText>
-										<ThemedText style={styles.dropdownButtonTxtStyle}>
-											{(selectedItem && selectedItem.name) || 'Izaberite fakultet...'}
-										</ThemedText>
-										<ThemedText>
-											{ isOpened ? <Feather name="chevron-up" size={24} /> : <Feather name="chevron-down" size={24} /> }
-										</ThemedText>
-										{/* Fix the chevron... */}
-
-									</ThemedView>
-								);
-							}}
-							renderItem={(item, index, isSelected) => {
-								return (
-									<KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-										<ThemedView
-											style={{ ...styles.dropdownItemStyle }}
-											darkColor={isSelected ? '#D2D9DF' : undefined}
-										>
-											<ThemedText style={styles.dropdownItemTxtStyle} darkColor={isSelected ? '#D2D9DF' : undefined}>{item.name}</ThemedText>
-										</ThemedView>
-									</KeyboardAvoidingView>
-								);
-							}}
-							showsVerticalScrollIndicator={true}
-							dropdownStyle={styles.dropdownMenuStyle}
+							value={faculty}
+							setValue={setFaculty}
 						/>
 					</ThemedView>
+
 				</View>
 					
 				<View>
@@ -100,22 +72,6 @@ const RegisterStepFour = () => {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'flex-end',
-		alignContent: 'center',
-	},
-
-	// INPUT
-	inputContainer: {
-		position: 'relative',
-		padding: 15,
-		paddingTop: 80,
-		borderTopLeftRadius: 50,
-		borderTopRightRadius: 50,
-		minHeight: '75%'
-	},
-
 	inputField: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -128,48 +84,6 @@ const styles = StyleSheet.create({
 	inputContent: {
 		justifyContent: 'space-between',
 		flex: 1
-	},
-
-	// DROPDOWN
-	dropdownButtonStyle: {
-		height: 50,
-		borderRadius: 10,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingHorizontal: 10,
-		gap: 5,
-	},
-	dropdownButtonTxtStyle: {
-		flex: 1,
-		fontWeight: '500',
-	},
-	dropdownButtonArrowStyle: {
-		fontSize: 28,
-	},
-	dropdownButtonIconStyle: {
-		fontSize: 28,
-		marginRight: 8,
-	},
-	dropdownMenuStyle: {
-		borderRadius: 8,
-	},
-	dropdownItemStyle: {
-		width: '100%',
-		flexDirection: 'row',
-		paddingHorizontal: 12,
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingVertical: 8,
-	},
-	dropdownItemTxtStyle: {
-		flex: 1,
-		fontSize: 18,
-		fontWeight: '500'
-	},
-	dropdownItemIconStyle: {
-		fontSize: 28,
-		marginRight: 8,
 	},
 });
 

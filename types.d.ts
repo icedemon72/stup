@@ -1,15 +1,26 @@
-import { User } from "firebase/auth";
+import { User, UserInfo } from "firebase/auth";
+
+type FirebaseDateType = {
+	seconds: number;
+	nanoseconds: number;
+}
 
 interface LoggedInUser extends User {
 	gender?: string;
 	name?: string;
+	dateOfBirth?: FirebaseDateType;
 	faculty?: {
 		key: number;
 		value: string;
 	}
 }
 
-type QuestionOptions = 'single' | 'multiple' | 'text';
+type DataType = {
+	label: string;
+	value: any;
+}
+
+type QuestionOptions = 'single' | 'multiple' | 'text' /* | 'slider'?? */;
 
 interface Question {
 	title: string;
@@ -22,6 +33,38 @@ interface Question {
 
 interface SurveyRules {
 	gender: 'ANY' | 'M' | 'F';
-	faculties: 'ANY' | any[];
+	faculties: any[];
 	ageLimit: number[];
+}
+
+interface Survey {
+	id: string;
+	title: string;
+	description: string;
+	rules: SurveyRules;
+	questionCount: number | string;
+	questions: Question[]; 
+	currentQuestion: number;
+	createdBy: {
+		id: string;
+		faculty: {
+			name: string;
+			value: number;
+		};
+		name: string;
+	};
+}
+
+interface SurveyData {
+	id: string;
+	title: string;
+	description: string;
+	rules: SurveyRules;
+	questions: Question[];
+}
+
+interface AnswerResponse {
+	questionIndex: number;
+	type: QuestionOptions;
+	answers: string | string[] | number | null;
 }
