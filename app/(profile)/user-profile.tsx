@@ -3,10 +3,11 @@ import { useSession } from '@/components/contexts/AuthContext';
 import { ThemedText } from '@/components/themed/ThemedText';
 import InputContainer from '@/components/ui/InputContainer';
 import RelativeLogo from '@/components/ui/RelativeLogo';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { getFirebaseDate } from '@/scripts/getFirebaseDate';
 import { ThemedView } from '@/components/themed/ThemedView';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { faculties } from '@/constants/Data';
 
 const UserProfile = () => {
 	const { session } = useSession();
@@ -14,19 +15,65 @@ const UserProfile = () => {
 	return (
 		<InputContainer absolute={<RelativeLogo name='person-outline' size={48} />}>
 			<View>
-				<ThemedText>{ session!.name }</ThemedText>
-				<ThemedText>{ session!.gender }</ThemedText>
-				<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
-					<ThemedText>
-						<Feather name="calendar" size={24} />
-					</ThemedText>
-						<ThemedText style={{ flex: 1 }}>
-							{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(getFirebaseDate(session!.dateOfBirth!))}
-						</ThemedText>
-				</ThemedView>
+				<ThemedText style={styles.title} type='subtitle'>Moj profil</ThemedText>
 
-				<ThemedText>{ session!.faculty?.value }</ThemedText>
-				<ThemedText>{ session!.email }</ThemedText>
+				<TouchableOpacity>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText><Feather name="mail" size={24} /></ThemedText>
+						<ThemedText>{ session!.email }</ThemedText>
+					</ThemedView>	
+				</TouchableOpacity>
+
+				<TouchableOpacity>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText><Feather name="lock" size={24} /></ThemedText>
+						<ThemedText>••••••</ThemedText>
+					</ThemedView>	
+				</TouchableOpacity>
+				
+				<TouchableOpacity>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText>
+							{ 
+								session!.gender === 'M' ?
+								<MaterialCommunityIcons name='face-man-outline' size={24} /> :
+								<MaterialCommunityIcons name='face-woman-outline' size={24} />
+
+							}
+						</ThemedText>
+						<ThemedText>{ session!.name }</ThemedText>
+					</ThemedView>
+				</TouchableOpacity>
+
+				<TouchableOpacity>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText><Feather name="mail" size={24} /></ThemedText>
+						<ThemedText>{ session!.gender === 'M' ? 'Muški' : 'Ženski' } pol</ThemedText>
+					</ThemedView>
+				</TouchableOpacity>
+
+				<TouchableOpacity>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+					<ThemedText><Feather name="mail" size={24} /></ThemedText>
+						<ThemedText>
+							{/* @ts-ignore */}
+							{ faculties[session!.faculty!.value].label }
+						</ThemedText>
+					</ThemedView>
+				</TouchableOpacity>
+
+				<TouchableOpacity>
+					<ThemedView style={styles.inputField} backgroundKey='backgroundSecondary'>
+						<ThemedText>
+							<Feather name="calendar" size={24} />
+						</ThemedText>
+							<ThemedText style={{ flex: 1 }}>
+								{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(getFirebaseDate(session!.dateOfBirth!))}
+							</ThemedText>
+					</ThemedView>
+				</TouchableOpacity>
+
+
 			</View>
 		</InputContainer>
 	);
@@ -42,6 +89,10 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		borderRadius: 10
 	},
+	title: {
+    textAlign: 'center',
+    paddingBottom: 20
+  }
 });
 
 export default UserProfile;

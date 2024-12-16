@@ -23,12 +23,12 @@ const Index = () => {
 					<ThemedText style={{ flex: 1, textAlign: 'center' }}>Moje informacije</ThemedText>
 				</ThemedTouchableOpacity>
 				
-				<ThemedTouchableOpacity style={styles.pressable}>
+				<ThemedTouchableOpacity style={styles.pressable} onPress={() => router.navigate('/(profile)/my-surveys')}>
 					<ThemedText style={{ position: 'absolute', left: 10 }}><MaterialIcons name="playlist-add" size={24} /></ThemedText>
 					<ThemedText style={{ flex: 1, textAlign: 'center' }}>Moji STUPitnici</ThemedText>
 				</ThemedTouchableOpacity>
 
-				<ThemedTouchableOpacity style={styles.pressable}>
+				<ThemedTouchableOpacity style={styles.pressable} onPress={() => router.navigate('/(profile)/completed-surveys')}>
 					<ThemedText style={{ position: 'absolute', left: 10 }}><MaterialIcons name="playlist-add-check" size={24}  /></ThemedText>
 					<ThemedText style={{ flex: 1, textAlign: 'center' }}>Rešeni STUPitnici</ThemedText>
 				</ThemedTouchableOpacity>

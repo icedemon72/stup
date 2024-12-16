@@ -14,6 +14,8 @@ const ProfileLayout = () => {
 			headerShown: false
 		}}>
 			<Stack.Screen name='user-profile' />		
+			<Stack.Screen name='completed-surveys' />		
+			<Stack.Screen name='my-surveys' />		
 		</Stack>
 	);
 }

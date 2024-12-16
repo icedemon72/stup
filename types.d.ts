@@ -53,6 +53,7 @@ interface Survey {
 		};
 		name: string;
 	};
+	answeredBy?: string[]
 }
 
 interface SurveyData {

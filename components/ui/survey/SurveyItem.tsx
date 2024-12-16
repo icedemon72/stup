@@ -8,11 +8,19 @@ import { Router } from 'expo-router';
 
 type SurveyItemProps = {
 	item: Survey;
-	router: Router;
+	router?: Router;
 }
 
-
 const SurveyItem = ({ item, router }: SurveyItemProps) => {
+	const handleNavigate = () => {
+		if(router) {
+			router.navigate({
+				pathname: '/(surveys)/survey-info',
+				params: { surveyId: item.id }
+			});
+		}
+	}
+	
 	return (
 		<ThemedView backgroundKey='globalBackground' style={styles.container}>
 			<ThemedText type='subtitle'>{ item.title }</ThemedText>
@@ -21,17 +29,14 @@ const SurveyItem = ({ item, router }: SurveyItemProps) => {
 			<View style={styles.bottomContainer}>
 				<TouchableOpacity 
 					style={styles.button} 
-					onPress={() => router.navigate({
-						pathname: '/(surveys)/survey-info',
-						params: { surveyId: item.id }
-					})}
+					onPress={handleNavigate}
 				>
 					<ThemedText style={{ textAlign: 'center', }}>Otvori STUPitnik</ThemedText>
 				</TouchableOpacity>
 				<View style={styles.info}>
 					<ThemedText style={styles.users} type='defaultSemiBold' textColor='muted'>
 						<Feather name="user-check" size={24} />
-						0
+						{ item.answeredBy!.length }
 					</ThemedText>
 					{/* <ThemedText textColor='muted'>
 						<Ionicons name='school-outline' size={24} />
