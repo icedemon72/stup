@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedView } from '@/components/themed/ThemedView';
 import { faculties } from '@/constants/Data';
 import { db } from '@/constants/Firebase';
-import { collection, doc, arrayUnion, writeBatch } from 'firebase/firestore';
+import { collection, doc, arrayUnion, writeBatch, serverTimestamp } from 'firebase/firestore';
 import { useSession } from '@/components/contexts/AuthContext';
 import { useRouter } from 'expo-router';
 import InputContainer from '@/components/ui/InputContainer';
@@ -34,7 +34,8 @@ const QuestionFinal = () => {
 					name: session?.name || '',
 					faculty: session?.faculty,
 				},
-				answeredBy: []
+				answeredBy: [],
+				timestamp: serverTimestamp()
 			});
 
 			const userDocRef = doc(db, 'users', session!.uid);

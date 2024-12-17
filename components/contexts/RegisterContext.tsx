@@ -1,4 +1,4 @@
-import { FacultyType } from '@/constants/Data';
+import { DataType } from '@/types';
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 interface RegisterContextType {
@@ -12,8 +12,8 @@ interface RegisterContextType {
 	setPassword: React.Dispatch<React.SetStateAction<string>>;
 	dateOfBirth: Date | null;
 	setDateOfBirth: React.Dispatch<React.SetStateAction<Date | null>>;
-	faculty: FacultyType | null; // needs to be a type
-	setFaculty: React.Dispatch<React.SetStateAction<FacultyType | null>>; // needs to be a type
+	faculty: DataType | null; // needs to be a type
+	setFaculty: React.Dispatch<React.SetStateAction<DataType | null>>; // needs to be a type
 	step: number;
 	setStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -49,11 +49,11 @@ export const useRegisterContext = () => {
 }
 
 export function RegisterProvider({ children }: RegisterProviderProps) {
-	const [ email, setEmail ] = useState<string>('123@gmail.com');
+	const [ email, setEmail ] = useState<string>('');
 	const [ name, setName ] = useState<string>('');
 	const [ gender, setGender ] = useState<string>('M');
-	const [ faculty, setFaculty ] = useState<FacultyType | null>(null); // This should be interface with name and id
-	const [ password, setPassword ] = useState<string>('123456')
+	const [ faculty, setFaculty ] = useState<DataType | null>(null); // This should be interface with name and id
+	const [ password, setPassword ] = useState<string>('')
 	const [ dateOfBirth, setDateOfBirth ] = useState<Date | null>(null);
 	const [ step, setStep ] = useState<number>(1);
 

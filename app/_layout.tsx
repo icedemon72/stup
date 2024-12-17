@@ -37,6 +37,7 @@ const RootLayout = () => {
 					<Stack.Screen name='login' />
 					<Stack.Screen name='(register)' />
 					<Stack.Screen name='home' />
+					<Stack.Screen name='forgot-password' />
 					<Stack.Screen name='(tabs)' />
 				</Stack>
 				<StatusBar style="light" />

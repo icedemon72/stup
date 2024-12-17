@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { ThemedText } from '@/components/themed/ThemedText';
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Platform, Pressable } from 'react-native';
 import { useSession } from '@/components/contexts/AuthContext';
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import Feather from '@expo/vector-icons/Feather';
@@ -10,10 +10,12 @@ import InputContainer from '@/components/ui/InputContainer';
 import InputField from '@/components/ui/InputField';
 
 const Login: React.FC = () => {
+	const router = useRouter();
+	const { signIn, isLoading, session } = useSession();
+
 	const [ email, setEmail ] = useState<string>('123@gmail.com');
 	const [ password, setPassword ] = useState<string>('123456');
 	const [ passwordShown, setPasswordShown ] = useState<boolean>(false);
-	const { signIn, isLoading, session } = useSession();
 
 	if (session) {
 		return <Redirect href="/(tabs)" />;
@@ -66,8 +68,11 @@ const Login: React.FC = () => {
 				<TouchableOpacity style={ styles.loginButton } onPress={handleLogin}>
 					<Text style={{ textAlign: 'center' }}>Prijavi se!</Text>
 				</TouchableOpacity>
+				
+				<Pressable onPress={() => router.navigate('/forgot-password')}>
+					<ThemedText type='default' style={{ textAlign: 'center', textDecorationLine: 'underline', fontSize: 14 }}>Zaboravio/la si lozinku?</ThemedText>
+				</Pressable>
 
-				<ThemedText type='default' style={{ textAlign: 'center', textDecorationLine: 'underline', fontSize: 14 }}>Zaboravio/la si lozinku?</ThemedText>
 			</View>
 		</InputContainer>
 	);

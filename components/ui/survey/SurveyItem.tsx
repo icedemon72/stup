@@ -3,7 +3,7 @@ import { ThemedText } from '@/components/themed/ThemedText';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Survey } from '@/types';
 import { ThemedView } from '@/components/themed/ThemedView';
-import { Feather } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { Router } from 'expo-router';
 
 type SurveyItemProps = {
@@ -23,8 +23,17 @@ const SurveyItem = ({ item, router }: SurveyItemProps) => {
 	
 	return (
 		<ThemedView backgroundKey='globalBackground' style={styles.container}>
-			<ThemedText type='subtitle'>{ item.title }</ThemedText>
-			<ThemedText textColor='muted'>{ item.description }</ThemedText>
+			<View style={styles.content}>
+				<View style={{ flex: 1 }}>
+					<ThemedText type='subtitle'>{ item.title }</ThemedText>
+					<ThemedText textColor='muted'>{ item.description }</ThemedText>
+				</View>
+				<TouchableOpacity style={{ marginTop: 10 }}>
+					<ThemedText textColor='muted'>
+						<Entypo name="dots-three-vertical" size={18} />
+					</ThemedText>
+				</TouchableOpacity>
+			</View>
 			
 			<View style={styles.bottomContainer}>
 				<TouchableOpacity 
@@ -54,7 +63,22 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 		paddingHorizontal: 20,
 		borderRadius: 10,
-		marginBottom: 20
+		marginBottom: 20,
+		position: 'relative',
+	},
+	completed: {
+		position: 'absolute',
+		top: 10,
+		left: 20,
+		width: '100%',
+		height: '100%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		zIndex: 10
+	},
+	content: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 	bottomContainer: {
 		flexDirection: 'row',

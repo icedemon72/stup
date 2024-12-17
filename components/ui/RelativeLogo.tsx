@@ -3,13 +3,13 @@ import { Colors } from '@/constants/Colors';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useTheme } from '@react-navigation/native';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 type RelativeLogoProps = {
-	name?: keyof typeof Ionicons.glyphMap | keyof typeof MaterialIcons.glyphMap;
+	name?: keyof typeof Ionicons.glyphMap | keyof typeof MaterialIcons.glyphMap | keyof typeof FontAwesome.glyphMap;
 	size?: number;
-	iconPack?: 'Ionicons' | 'MaterialIcons';
+	iconPack?: 'Ionicons' | 'MaterialIcons' | 'FontAwesome';
 }
 
 const screenWidth = Dimensions.get('window').width;
@@ -19,14 +19,16 @@ const RelativeLogo = ({ name = 'aperture-outline', size = 72, iconPack = 'Ionico
 	const outerBackgroundColor = useThemeColor({ light: undefined, dark: undefined }, 'globalBackground');
 	const innerBackgroundColor = useThemeColor({ light: Colors.light.background, dark: Colors.dark.background }, 'background');
 
+	const iconMap = {
+		'Ionicons': <Ionicons name={name as keyof typeof Ionicons.glyphMap} size={size} color={colors.text}/>,
+		'MaterialIcons': <MaterialIcons name={name as keyof typeof MaterialIcons.glyphMap} size={size} color={colors.text} />,
+		'FontAwesome': <FontAwesome name={name as keyof typeof FontAwesome.glyphMap} size={size} color={colors.text} />
+	}
+
 	return (
 		<View style={{ ...styles.circleContainer, backgroundColor: outerBackgroundColor }}>
 			<View style={{ ...styles.logoContainer, backgroundColor: innerBackgroundColor }}>
-				{
-					iconPack === 'Ionicons' ?
-					<Ionicons name={name as keyof typeof Ionicons.glyphMap} size={size}  color={ colors.text } /> :
-					<MaterialIcons name={name as keyof typeof MaterialIcons.glyphMap} size={size}  color={ colors.text } />
-				}
+				{ iconMap[iconPack] }
 			</View>
 		</View>
 	);
