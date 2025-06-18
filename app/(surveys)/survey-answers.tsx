@@ -12,6 +12,7 @@ import AnswersSelector from '@/components/ui/survey/answers/AnswersSelector';
 import { arrayUnion, collection, doc, getDocs, query, serverTimestamp, where, writeBatch } from 'firebase/firestore';
 import { db } from '@/constants/Firebase';
 import { useSession } from '@/components/contexts/AuthContext';
+import Toast from 'react-native-toast-message';
 
 type RouteParams = {
 	surveyId: string;
@@ -70,7 +71,10 @@ const SurveyAnswers = () => {
 
 			await batch.commit();
 		} catch (err) {
-			console.error(err);
+			Toast.show({
+				type: 'error',
+				text1: 'Odgovor na ovoj anketi već postoji!',
+			})
 		} finally {
 			// setIsLoading(false);
 		}

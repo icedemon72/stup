@@ -10,6 +10,8 @@ import { useSession } from '@/components/contexts/AuthContext';
 import { useRouter } from 'expo-router';
 import InputContainer from '@/components/ui/InputContainer';
 import RelativeLogo from '@/components/ui/RelativeLogo';
+import { Feather } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 
 const QuestionFinal = () => {
 	const router = useRouter();
@@ -43,9 +45,18 @@ const QuestionFinal = () => {
 			
 			await batch.commit();
 
+			Toast.show({
+				type: 'success',
+				text1: 'Anketa je uspešno napravljena'
+			})
+
 			router.navigate({ pathname: '/(surveys)/survey-info', params: { surveyId: surveyDocRef.id }});
 		} catch (err) {
-			console.error(err);
+			Toast.show({
+				type: 'error',
+				text1: 'Došlo je do greške prilikom čuvanja ankete'
+			});
+			// console.error(err);
 		} finally {
 			setIsLoading(false);
 		}
@@ -86,15 +97,22 @@ const QuestionFinal = () => {
 					</ThemedText>
 				</ThemedView>
 
+				<ThemedText style={{ marginBottom: 5, marginTop: 10}}>Pitanja</ThemedText>
 				{
 					questions.map((question, i) => (
-						<ThemedText key={i}>{ question.title }</ThemedText>
+						<ThemedView key={i} style={styles.inputField} backgroundKey='backgroundSecondary'>
+							<ThemedText>{i + 1}. { question.title }</ThemedText>
+						</ThemedView>
 					))
 				}
-
-				<TouchableOpacity onPress={handleSaveSurvey} disabled={isLoading}>
-					<ThemedText>Unesi</ThemedText>
-				</TouchableOpacity>
+				
+				<View style={styles.arrowContainer}>
+					<TouchableOpacity style={styles.button} onPress={handleSaveSurvey}>
+						<ThemedText style={{ textAlign: 'center' }}>
+							<Feather name="arrow-right" size={24}  />
+						</ThemedText>
+					</TouchableOpacity>
+				</View>
 
 			</View>
 		</InputContainer>
@@ -114,6 +132,21 @@ const styles = StyleSheet.create({
 	text: {
 		textAlign: 'center',
 		paddingVertical: 20,
+	},
+	button: {
+		width: 70, 
+		height: 70,
+		borderRadius: 1000,
+		backgroundColor: 'orange', // change this 
+		justifyContent: 'center', 
+	},
+	arrowContainer: {
+		flexDirection: 'row',
+		width: '100%',
+		justifyContent: 'flex-end',
+		flex: 1,
+		marginBottom: 20,
+		marginTop: 10
 	}
 });
 

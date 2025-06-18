@@ -9,9 +9,10 @@ import { Router } from 'expo-router';
 type SurveyItemProps = {
 	item: Survey;
 	router?: Router;
+	inReseni?: boolean;
 }
 
-const SurveyItem = ({ item, router }: SurveyItemProps) => {
+const SurveyItem = ({ item, router, inReseni = false }: SurveyItemProps) => {
 	const handleNavigate = () => {
 		if(router) {
 			router.navigate({
@@ -36,12 +37,16 @@ const SurveyItem = ({ item, router }: SurveyItemProps) => {
 			</View>
 			
 			<View style={styles.bottomContainer}>
-				<TouchableOpacity 
-					style={styles.button} 
-					onPress={handleNavigate}
-				>
-					<ThemedText style={{ textAlign: 'center', }}>Otvori STUPitnik</ThemedText>
-				</TouchableOpacity>
+				{
+					!inReseni && (
+						<TouchableOpacity 
+							style={styles.button} 
+							onPress={handleNavigate}
+						>
+							<ThemedText style={{ textAlign: 'center', }}>Otvori STUPitnik</ThemedText>
+						</TouchableOpacity>
+					)
+				}
 				<View style={styles.info}>
 					<ThemedText style={styles.users} type='defaultSemiBold' textColor='muted'>
 						<Feather name="user-check" size={24} />

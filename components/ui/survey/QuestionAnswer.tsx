@@ -26,7 +26,6 @@ const QuestionAnswer = ({
 }: QuestionAnswerProps) => {
 	const [ isEditModalOpen, setIsEditModalOpen ] = useState<boolean>(false);
 
-
 	return (
 		<>
 			{

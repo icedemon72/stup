@@ -19,6 +19,7 @@ const Index = () => {
 	const [ surveys, setSurveys ] = useState<Survey[]>([]); 
 	const [ isFiltersOpen, setIsFiltersOpen ] = useState<boolean>(false);
 	const [ isLoading, setIsLoading ] = useState<boolean>(false);
+	const [searchTerm, setSearchTerm] = useState('');
 
 	const fetchSurveys = async () =>  { 
 		try {
@@ -42,6 +43,10 @@ const Index = () => {
 		}
 	}
 
+	const filteredSurveys = surveys.filter(survey => 
+		survey.title.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
 	useEffect(() => {
 		fetchSurveys(); 
 	}, []);
@@ -52,6 +57,8 @@ const Index = () => {
 			<View style={styles.searchContainer}>
 				<InputField 
 					placeholder='Pretraži...'
+					value={searchTerm}
+  					onChangeText={setSearchTerm}
 					leftIcon={
 					<TouchableOpacity onPress={() => setIsFiltersOpen(!isFiltersOpen)}>
 						<ThemedText 
@@ -67,7 +74,7 @@ const Index = () => {
 				{ isFiltersOpen && <FilterContainer filterList={[]} />}
 			</View>
 			<FlatList
-				data={surveys}
+				data={filteredSurveys}
 				scrollEnabled={false}
 				renderItem={({ item }) => <SurveyItem item={item} router={router} />} 
 				keyExtractor={(item) => item.id}
@@ -79,7 +86,7 @@ const Index = () => {
 				}
 			/>
 			{
-				(!isLoading && !surveys.length) && 
+				(!isLoading && !filteredSurveys.length) && 
 				<SurveyNotFound />
 			}
 		</View>

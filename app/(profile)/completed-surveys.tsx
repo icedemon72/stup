@@ -49,7 +49,7 @@ const CompletedSurveys = () => {
         <FlatList
           data={surveys}
           scrollEnabled={false}
-          renderItem={({ item }) => <SurveyItem item={item} />} 
+          renderItem={({ item }) => <SurveyItem item={item} inReseni={true} />} 
           keyExtractor={(item) => item.id}
           onEndReachedThreshold={0.5}
           ListFooterComponent={

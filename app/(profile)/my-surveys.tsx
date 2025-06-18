@@ -9,10 +9,11 @@ import InputContainer from '@/components/ui/InputContainer';
 import RelativeLogo from '@/components/ui/RelativeLogo';
 import SurveyItem from '@/components/ui/survey/SurveyItem';
 import SurveyNotFound from '@/components/ui/survey/SurveyNotFound';
+import { useRouter } from 'expo-router';
 
 const MySurveys = () => {
   const { session } = useSession();
-
+  const router = useRouter();
   const [ surveys, setSurveys ] = useState<Survey[]>([]);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
@@ -49,7 +50,7 @@ const MySurveys = () => {
         <FlatList
           data={surveys}
           scrollEnabled={false}
-          renderItem={({ item }) => <SurveyItem item={item} />} 
+          renderItem={({ item }) => <SurveyItem item={item} router={router} />} 
           keyExtractor={(item) => item.id}
           onEndReachedThreshold={0.5}
           ListFooterComponent={
